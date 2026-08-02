@@ -1,12 +1,12 @@
 import { createContext } from "react";
-import type { Session, User } from "@supabase/supabase-js";
+import type { AuthError, Session, User } from "@supabase/supabase-js";
 
 export interface AuthContextType {
   user: User | null;
   session: Session | null;
   loading: boolean;
 
-  signOut: () => Promise<void>;
+  signOut: () => Promise<{ error: AuthError | null }>;
 }
 
 export const AuthContext = createContext<AuthContextType | null>(null);

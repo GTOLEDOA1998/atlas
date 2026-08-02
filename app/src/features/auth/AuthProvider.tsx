@@ -48,7 +48,7 @@ export function AuthProvider({ children }: Props) {
       session,
       loading,
       signOut: async () => {
-        await authService.signOut();
+        return await authService.signOut();
       },
     }),
     [user, session, loading]

@@ -7,6 +7,7 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useRegister } from "../hooks/useRegister";
+import { getAuthErrorMessage } from "../auth.errors";
 
 const registerSchema = z
   .object({
@@ -192,7 +193,7 @@ export function RegisterForm() {
           aria-live="polite"
           className="rounded-lg border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive"
         >
-          {error.message}
+          {getAuthErrorMessage(error)}
         </p>
       )}
 
