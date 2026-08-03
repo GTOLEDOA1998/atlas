@@ -1,13 +1,23 @@
-export default function Home() {
-  return (
-    <main className="p-10">
-      <h1>Atlas</h1>
+import { redirect } from "next/navigation";
 
-      <pre>
-        {process.env.NEXT_PUBLIC_SUPABASE_URL
-          ? "✅ URL encontrada"
-          : "❌ URL no encontrada"}
-      </pre>
-    </main>
+import { createServerSupabaseClient } from "@/lib/supabase/server";
+import {
+  DEFAULT_AUTHENTICATED_REDIRECT,
+  DEFAULT_UNAUTHENTICATED_REDIRECT,
+} from "@/features/auth/auth.constants";
+
+/**
+ * Entry point. Sends visitors to the app or to sign-in depending on their
+ * session, decided on the server so there is no flash of the wrong screen.
+ */
+export default async function Home() {
+  const supabase = await createServerSupabaseClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  redirect(
+    user ? DEFAULT_AUTHENTICATED_REDIRECT : DEFAULT_UNAUTHENTICATED_REDIRECT
   );
 }

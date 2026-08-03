@@ -3,6 +3,7 @@
 import { useCallback, useState } from "react";
 import { AuthError } from "@supabase/supabase-js";
 import { authService } from "../auth.service";
+import { toAuthError } from "../auth.errors";
 import type { LoginCredentials } from "../auth.types";
 
 interface UseLoginResult {
@@ -37,13 +38,7 @@ export function useLogin(): UseLoginResult {
         return true;
       } catch (thrown) {
         setError(
-          thrown instanceof AuthError
-            ? thrown
-            : new AuthError(
-                thrown instanceof Error
-                  ? thrown.message
-                  : "An unexpected error occurred during login"
-              )
+          toAuthError(thrown, "An unexpected error occurred during login")
         );
         return false;
       } finally {

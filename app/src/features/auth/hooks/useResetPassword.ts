@@ -5,48 +5,48 @@ import { AuthError } from "@supabase/supabase-js";
 
 import { authService } from "../auth.service";
 import { toAuthError } from "../auth.errors";
-import type { RegisterCredentials } from "../auth.types";
+import type { ResetPasswordPayload } from "../auth.types";
 
-interface UseRegisterResult {
-  register: (data: RegisterCredentials) => Promise<void>;
+interface UseResetPasswordResult {
+  resetPassword: (data: ResetPasswordPayload) => Promise<boolean>;
   loading: boolean;
   error: AuthError | null;
   success: boolean;
 }
 
 /**
- * Registers a new Atlas user using Supabase Authentication.
+ * Sets a new password for the session created by a recovery link.
  */
-export function useRegister(): UseRegisterResult {
+export function useResetPassword(): UseResetPasswordResult {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<AuthError | null>(null);
   const [success, setSuccess] = useState(false);
 
-  const register = useCallback(
-    async ({ email, password }: RegisterCredentials): Promise<void> => {
+  const resetPassword = useCallback(
+    async ({ password }: ResetPasswordPayload): Promise<boolean> => {
       setLoading(true);
       setError(null);
       setSuccess(false);
 
       try {
-        const { error: signUpError } = await authService.signUp(
-          email,
-          password
-        );
+        const { error: updateError } =
+          await authService.updatePassword(password);
 
-        if (signUpError) {
-          setError(signUpError);
-          return;
+        if (updateError) {
+          setError(updateError);
+          return false;
         }
 
         setSuccess(true);
+        return true;
       } catch (thrown) {
         setError(
           toAuthError(
             thrown,
-            "An unexpected error occurred during registration"
+            "An unexpected error occurred while updating your password"
           )
         );
+        return false;
       } finally {
         setLoading(false);
       }
@@ -55,7 +55,7 @@ export function useRegister(): UseRegisterResult {
   );
 
   return {
-    register,
+    resetPassword,
     loading,
     error,
     success,

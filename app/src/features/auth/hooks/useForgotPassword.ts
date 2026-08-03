@@ -5,37 +5,35 @@ import { AuthError } from "@supabase/supabase-js";
 
 import { authService } from "../auth.service";
 import { toAuthError } from "../auth.errors";
-import type { RegisterCredentials } from "../auth.types";
+import type { ForgotPasswordPayload } from "../auth.types";
 
-interface UseRegisterResult {
-  register: (data: RegisterCredentials) => Promise<void>;
+interface UseForgotPasswordResult {
+  requestReset: (data: ForgotPasswordPayload) => Promise<void>;
   loading: boolean;
   error: AuthError | null;
   success: boolean;
 }
 
 /**
- * Registers a new Atlas user using Supabase Authentication.
+ * Sends a password recovery email through Supabase Authentication.
  */
-export function useRegister(): UseRegisterResult {
+export function useForgotPassword(): UseForgotPasswordResult {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<AuthError | null>(null);
   const [success, setSuccess] = useState(false);
 
-  const register = useCallback(
-    async ({ email, password }: RegisterCredentials): Promise<void> => {
+  const requestReset = useCallback(
+    async ({ email }: ForgotPasswordPayload): Promise<void> => {
       setLoading(true);
       setError(null);
       setSuccess(false);
 
       try {
-        const { error: signUpError } = await authService.signUp(
-          email,
-          password
-        );
+        const { error: resetError } =
+          await authService.requestPasswordReset(email);
 
-        if (signUpError) {
-          setError(signUpError);
+        if (resetError) {
+          setError(resetError);
           return;
         }
 
@@ -44,7 +42,7 @@ export function useRegister(): UseRegisterResult {
         setError(
           toAuthError(
             thrown,
-            "An unexpected error occurred during registration"
+            "An unexpected error occurred while requesting the reset email"
           )
         );
       } finally {
@@ -55,7 +53,7 @@ export function useRegister(): UseRegisterResult {
   );
 
   return {
-    register,
+    requestReset,
     loading,
     error,
     success,

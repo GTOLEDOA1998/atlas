@@ -1,9 +1,16 @@
-import { createClient } from "@supabase/supabase-js";
+import { createBrowserClient } from "@supabase/ssr";
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+import { env } from "@/lib/env";
 
-export const supabase = createClient(
-  supabaseUrl,
-  supabaseAnonKey
-);
+/**
+ * Supabase client for browser code.
+ *
+ * Sessions are persisted in cookies (not localStorage) so that the proxy and
+ * Server Components can read them on every request. `createBrowserClient`
+ * returns a singleton per configuration, so calling this repeatedly is cheap.
+ * It is created lazily rather than at module scope because client components
+ * are also rendered on the server, where `document` does not exist.
+ */
+export function createClient() {
+  return createBrowserClient(env.supabaseUrl, env.supabaseAnonKey);
+}

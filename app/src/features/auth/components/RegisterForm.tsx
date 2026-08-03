@@ -5,9 +5,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 import { useRegister } from "../hooks/useRegister";
 import { getAuthErrorMessage } from "../auth.errors";
+import {
+  authErrorBannerClassName,
+  authInputClassName,
+  authSuccessBannerClassName,
+} from "./authFormStyles";
 
 const registerSchema = z
   .object({
@@ -26,15 +30,6 @@ const registerSchema = z
   });
 
 type RegisterFormValues = z.infer<typeof registerSchema>;
-
-const inputClassName = cn(
-  "flex h-10 w-full rounded-lg border border-input bg-background px-3 py-2 text-sm text-foreground shadow-xs",
-  "placeholder:text-muted-foreground",
-  "transition-colors outline-none",
-  "focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50",
-  "disabled:cursor-not-allowed disabled:opacity-50",
-  "aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20"
-);
 
 /**
  * Register form for creating a new Atlas account.
@@ -102,7 +97,7 @@ export function RegisterForm() {
             aria-describedby={
               errors.email ? "register-email-error" : undefined
             }
-            className={inputClassName}
+            className={authInputClassName}
             placeholder="you@example.com"
             {...register("email")}
           />
@@ -135,7 +130,7 @@ export function RegisterForm() {
             aria-describedby={
               errors.password ? "register-password-error" : undefined
             }
-            className={inputClassName}
+            className={authInputClassName}
             placeholder="At least 8 characters"
             {...register("password")}
           />
@@ -170,7 +165,7 @@ export function RegisterForm() {
                 ? "register-confirm-password-error"
                 : undefined
             }
-            className={inputClassName}
+            className={authInputClassName}
             placeholder="Re-enter your password"
             {...register("confirmPassword")}
           />
@@ -191,7 +186,7 @@ export function RegisterForm() {
         <p
           role="alert"
           aria-live="polite"
-          className="rounded-lg border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive"
+          className={authErrorBannerClassName}
         >
           {getAuthErrorMessage(error)}
         </p>
@@ -201,7 +196,7 @@ export function RegisterForm() {
         <p
           role="status"
           aria-live="polite"
-          className="rounded-lg border border-primary/30 bg-primary/10 px-3 py-2 text-sm text-primary"
+          className={authSuccessBannerClassName}
         >
           Registration successful. Check your email to confirm your account.
         </p>

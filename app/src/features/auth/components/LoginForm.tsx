@@ -1,5 +1,6 @@
 "use client";
 
+import { useSyncExternalStore } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -7,10 +8,20 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 import { useLogin } from "../hooks/useLogin";
 import { getAuthErrorMessage } from "../auth.errors";
-import { OVERVIEW_ROUTE, REGISTER_ROUTE } from "../auth.constants";
+import {
+  AUTH_ERROR_QUERY_PARAM,
+  FORGOT_PASSWORD_ROUTE,
+  OVERVIEW_ROUTE,
+  REDIRECT_QUERY_PARAM,
+  REGISTER_ROUTE,
+  resolveSafeRedirect,
+} from "../auth.constants";
+import {
+  authErrorBannerClassName,
+  authInputClassName,
+} from "./authFormStyles";
 
 const loginSchema = z.object({
   email: z
@@ -22,14 +33,26 @@ const loginSchema = z.object({
 
 type LoginFormValues = z.infer<typeof loginSchema>;
 
-const inputClassName = cn(
-  "flex h-10 w-full rounded-lg border border-input bg-background px-3 py-2 text-sm text-foreground shadow-xs",
-  "placeholder:text-muted-foreground",
-  "transition-colors outline-none",
-  "focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50",
-  "disabled:cursor-not-allowed disabled:opacity-50",
-  "aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20"
-);
+/**
+ * Reads the `error` message /auth/callback puts in the URL when an email link
+ * could not be exchanged for a session.
+ *
+ * The query string is read straight off `window.location` rather than through
+ * useSearchParams(), which would force this statically prerendered page into a
+ * Suspense boundary. It never changes while the page is mounted, hence the
+ * no-op subscription.
+ */
+const subscribeToNothing = () => () => {};
+
+function readCallbackError(): string | null {
+  return new URLSearchParams(window.location.search).get(
+    AUTH_ERROR_QUERY_PARAM
+  );
+}
+
+function readCallbackErrorOnServer(): string | null {
+  return null;
+}
 
 /**
  * Login form for signing in to an existing Atlas account.
@@ -51,12 +74,26 @@ export function LoginForm() {
     },
   });
 
+  const callbackError = useSyncExternalStore(
+    subscribeToNothing,
+    readCallbackError,
+    readCallbackErrorOnServer
+  );
+
   const handleLogin = async (values: LoginFormValues) => {
     const success = await login(values);
 
-    if (success) {
-      router.replace(OVERVIEW_ROUTE);
+    if (!success) {
+      return;
     }
+
+    // Send the user back to whatever they were trying to reach. Reading the
+    // location directly avoids forcing this page into a Suspense boundary,
+    // which useSearchParams() would require at build time.
+    const params = new URLSearchParams(window.location.search);
+    const redirectTo = resolveSafeRedirect(params.get(REDIRECT_QUERY_PARAM));
+
+    router.replace(redirectTo ?? OVERVIEW_ROUTE);
   };
 
   return (
@@ -96,7 +133,7 @@ export function LoginForm() {
             disabled={loading}
             aria-invalid={Boolean(errors.email)}
             aria-describedby={errors.email ? "login-email-error" : undefined}
-            className={inputClassName}
+            className={authInputClassName}
             placeholder="you@example.com"
             {...register("email")}
           />
@@ -113,12 +150,21 @@ export function LoginForm() {
         </div>
 
         <div className="space-y-2">
-          <label
-            htmlFor="login-password"
-            className="text-sm font-medium text-foreground"
-          >
-            Password
-          </label>
+          <div className="flex items-center justify-between gap-2">
+            <label
+              htmlFor="login-password"
+              className="text-sm font-medium text-foreground"
+            >
+              Password
+            </label>
+
+            <Link
+              href={FORGOT_PASSWORD_ROUTE}
+              className="text-sm font-medium text-primary underline-offset-4 hover:underline"
+            >
+              Forgot password?
+            </Link>
+          </div>
 
           <input
             id="login-password"
@@ -129,7 +175,7 @@ export function LoginForm() {
             aria-describedby={
               errors.password ? "login-password-error" : undefined
             }
-            className={inputClassName}
+            className={authInputClassName}
             placeholder="Enter your password"
             {...register("password")}
           />
@@ -146,13 +192,9 @@ export function LoginForm() {
         </div>
       </div>
 
-      {error && (
-        <p
-          role="alert"
-          aria-live="polite"
-          className="rounded-lg border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive"
-        >
-          {getAuthErrorMessage(error)}
+      {(error || callbackError) && (
+        <p role="alert" aria-live="polite" className={authErrorBannerClassName}>
+          {error ? getAuthErrorMessage(error) : callbackError}
         </p>
       )}
 
