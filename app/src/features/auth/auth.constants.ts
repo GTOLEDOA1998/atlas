@@ -1,9 +1,11 @@
+import { APP_ROUTE_PREFIXES, ROUTES } from "@/config/routes";
+
 export const LOGIN_ROUTE = "/login";
 export const REGISTER_ROUTE = "/register";
 export const FORGOT_PASSWORD_ROUTE = "/forgot-password";
 export const RESET_PASSWORD_ROUTE = "/reset-password";
 export const AUTH_CALLBACK_ROUTE = "/auth/callback";
-export const OVERVIEW_ROUTE = "/overview";
+export const OVERVIEW_ROUTE = ROUTES.overview;
 
 export const DEFAULT_AUTHENTICATED_REDIRECT = OVERVIEW_ROUTE;
 export const DEFAULT_UNAUTHENTICATED_REDIRECT = LOGIN_ROUTE;
@@ -14,8 +16,14 @@ export const REDIRECT_QUERY_PARAM = "redirect";
 /** Query param used by the callback route to report a failed exchange. */
 export const AUTH_ERROR_QUERY_PARAM = "error";
 
-/** Route prefixes that require an authenticated session. */
-export const PROTECTED_ROUTE_PREFIXES = [OVERVIEW_ROUTE] as const;
+/**
+ * Route prefixes that require an authenticated session.
+ *
+ * Sourced from the application route registry so the proxy protects exactly
+ * the set of routes the shell renders. A new authenticated route is protected
+ * by adding it to `APP_ROUTE_PREFIXES`, not by editing this file.
+ */
+export const PROTECTED_ROUTE_PREFIXES = APP_ROUTE_PREFIXES;
 
 /**
  * Routes that only make sense while signed out.
