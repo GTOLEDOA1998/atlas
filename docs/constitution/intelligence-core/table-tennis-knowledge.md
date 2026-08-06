@@ -2,7 +2,7 @@
 
 > **Status:** Foundational — the permanent knowledge model of table tennis that Atlas reasons over.
 > **Nature:** This is a *knowledge* document. It defines **what Atlas knows about table tennis** and, more importantly, **how that knowledge is structured and connected**. It contains no software, AI, prompt, or database detail — by design.
-> **What it is not:** not a coaching guide (coaching judgment lives in [`coaching_dna.md`](coaching_dna.md)), not a technique manual, not an encyclopedia. It does not attempt to teach the sport or exhaustively catalogue it.
+> **What it is not:** not a coaching guide (coaching judgment lives in [`coaching-dna.md`](coaching-dna.md)), not a technique manual, not an encyclopedia. It does not attempt to teach the sport or exhaustively catalogue it.
 > **Authority:** Every intelligent component of Atlas inherits this model. When a component reasons about the game, it reasons in the vocabulary and relationships defined here.
 > **Relationship to Coaching DNA:** this document defines *what is known*; Coaching DNA defines *how that knowledge is used to coach a human*. Knowledge is neutral and descriptive; coaching is judgment and adaptation. The two are complementary and must stay consistent.
 > **Amendment:** The *framework* (the concept schema and relationship model) is intended to be stable for decades. The *concepts* it holds may be extended and refined as understanding grows. Changes are deliberate, never incidental.

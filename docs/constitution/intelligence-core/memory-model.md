@@ -3,7 +3,7 @@
 > **Status:** Foundational — the conceptual memory architecture of Atlas.
 > **Why this exists:** resolves the architectural component of Critical Blocker **C4** from the Intelligence Core Audit. `Memory Update` is stage 13 of the mandatory reasoning lifecycle, and historical reasoning, identity learning, and progress evaluation all depend on it — yet how Atlas remembers, updates, and forgets was never defined.
 > **Scope:** conceptual architecture only. **Not** privacy, legal, compliance, regulation, or data governance. **Not** software, APIs, databases, or implementation. What *may* be remembered, for how long, and under whose consent is a governance decision that belongs elsewhere; this document defines the structure that decision will operate on.
-> **Precedence:** [`coaching_dna.md`](coaching_dna.md) governs. Memory may never override Atlas DNA.
+> **Precedence:** [`coaching-dna.md`](coaching-dna.md) governs. Memory may never override Atlas DNA.
 > **Amendment:** deliberate and explicit.
 
 ---
@@ -28,7 +28,7 @@ Atlas separates memory into three kinds that must never be collapsed into one an
 ## 1. Memory Philosophy
 
 - **Memory exists to make Atlas a better assistant over time** — the assistant coach who has worked beside this coach, in this club, with this player, for years.
-- **Memory is the mechanism by which defaults are replaced.** [`default_reasoning_profile.md`](default_reasoning_profile.md) defines how Atlas behaves knowing nothing; memory is how it stops knowing nothing. Defaults are scaffolding; memory is what replaces them.
+- **Memory is the mechanism by which defaults are replaced.** [`default-reasoning-profile.md`](default-reasoning-profile.md) defines how Atlas behaves knowing nothing; memory is how it stops knowing nothing. Defaults are scaffolding; memory is what replaces them.
 - **Memory is a current best understanding**, held provisionally, revised when reality disagrees.
 - **Memory informs; observation decides.** Memory shapes what Atlas expects. It never overrules what Atlas actually sees today.
 - **Memory is about people.** It is held with care, used to serve development, and never used to grade a human.
@@ -74,7 +74,7 @@ Memory may originate **only** from three sources:
 | **Coach Memory** | A coach's communication, feedback style, risk tolerance, intensity, methods, standards | Identity | Belongs to **that coach**. Does not transfer to a successor |
 | **Group Memory** | A group's purpose, objectives, developmental context, training characteristics | Identity | Club-defined; Atlas imposes no taxonomy and infers nothing from a group's name |
 | **Player Memory** | Stage, goals, strengths, weaknesses, progressions, standing declarations, development trajectory | Identity | The most carefully held memory — it concerns a developing human being |
-| **Current Session Memory** | What was true on one occasion | Context | Temporary by default; see [`current_session.md`](current_session.md) |
+| **Current Session Memory** | What was true on one occasion | Context | Temporary by default; see [`current-session.md`](current-session.md) |
 | **Historical Memory** | The record of observations, conclusions, recommendations, decisions, and outcomes across all subjects | Historical | Append-only. The substrate all identity memory is derived from |
 
 ### By Permanence
@@ -88,7 +88,7 @@ Memory may originate **only** from three sources:
 
 ## 5. Memory Ownership and Boundaries
 
-**Every memory is owned.** Ownership has two aspects: the **subject** it describes, and the **human authority** responsible for it under [`human_decision_authority.md`](human_decision_authority.md).
+**Every memory is owned.** Ownership has two aspects: the **subject** it describes, and the **human authority** responsible for it under [`human-decision-authority.md`](human-decision-authority.md).
 
 **Boundaries that must never be crossed:**
 
@@ -103,7 +103,7 @@ Memory may originate **only** from three sources:
 
 ## 6. Memory Confidence
 
-Every memory carries confidence, inherited from [`atlas_reasoning_model.md`](atlas_reasoning_model.md) and never inflated.
+Every memory carries confidence, inherited from [`reasoning-model.md`](reasoning-model.md) and never inflated.
 
 - **Confidence rises** with repetition across occasions, corroboration, direct observation, and explicit human confirmation.
 - **Confidence falls** with contradiction, thin support, and reliance on inference about the non-observable.
@@ -170,7 +170,7 @@ Every memory carries confidence, inherited from [`atlas_reasoning_model.md`](atl
 
 1. **Governance of memory remains outside this document and unresolved (Critical).** This document defines *how* memory works structurally. It does not define *what may be remembered, for how long, or under whose consent* — questions that matter especially because Atlas remembers developing athletes, including minors. The architecture here is deliberately built to accommodate restrictive answers (directed forgetting, derived identity, source retention), but **the governance decision itself is still owed**, and belongs in Governance rather than the Intelligence Core.
 
-2. **The promotion threshold is still undefined (High).** Repetition converts context into identity, but how much repetition is required remains unspecified — the same unresolved threshold flagged in `current_session.md` and `default_reasoning_profile.md`. These are one question appearing in three places and should be answered once.
+2. **The promotion threshold is still undefined (High).** Repetition converts context into identity, but how much repetition is required remains unspecified — the same unresolved threshold flagged in `current-session.md` and `default-reasoning-profile.md`. These are one question appearing in three places and should be answered once.
 
 3. **Decay has no defined rate (High).** Memory loses authority with staleness, but nothing specifies how quickly — and it plainly differs by subject: a club's philosophy ages slowly, a developing junior's technical profile ages fast. Without this, Atlas either clings to obsolete understanding or discards valid history.
 

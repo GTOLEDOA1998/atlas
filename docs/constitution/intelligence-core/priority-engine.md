@@ -2,7 +2,7 @@
 
 > **Status:** Foundational — the permanent decision model for what Atlas brings to a coach's attention first.
 > **Nature:** A *decision philosophy*. It contains no software, APIs, schemas, pseudocode, algorithms, or scoring systems — by design. Prioritization here is expressed as reasoned trade-offs, never as arithmetic.
-> **Position in the Intelligence layer:** [`coaching_dna.md`](coaching_dna.md) is the conscience. [`table_tennis_knowledge.md`](table_tennis_knowledge.md) is the material. [`atlas_reasoning_model.md`](atlas_reasoning_model.md) is the method that produces validated conclusions. **This document is the bridge from those conclusions to training** — it decides which conclusions become priorities, and which wait.
+> **Position in the Intelligence layer:** [`coaching-dna.md`](coaching-dna.md) is the conscience. [`table-tennis-knowledge.md`](table-tennis-knowledge.md) is the material. [`reasoning-model.md`](reasoning-model.md) is the method that produces validated conclusions. **This document is the bridge from those conclusions to training** — it decides which conclusions become priorities, and which wait.
 > **Precedence:** Coaching DNA governs. This document elaborates Coaching DNA §6 (how a coach prioritizes) and §7 (intervention and patience), and expands the Reasoning Model's *Recommendation Ranking* stage. It may not weaken any Atlas DNA principle. Where it appears to conflict with Coaching DNA, Coaching DNA wins.
 > **Amendment:** deliberate and explicit, never incidental.
 

@@ -17,15 +17,15 @@ Over a sustained documentation phase, nine foundational documents were produced,
 
 | Document | Defines |
 |---|---|
-| [`coaching_dna.md`](../03%20Intelligence/coaching_dna.md) | How Atlas thinks as a coach — the conscience, the Identity Hierarchy, the Decision Hierarchy |
-| [`table_tennis_knowledge.md`](../03%20Intelligence/table_tennis_knowledge.md) | What Atlas knows about the sport — the concept schema and relationship model |
-| [`atlas_reasoning_model.md`](../03%20Intelligence/atlas_reasoning_model.md) | How Atlas reasons — the thirteen-stage reasoning lifecycle |
-| [`priority_engine.md`](../03%20Intelligence/priority_engine.md) | How Atlas decides what deserves attention — WORK NOW / MONITOR / WAIT |
-| [`training_model.md`](../03%20Intelligence/training_model.md) | How Atlas turns priorities into training |
-| [`default_reasoning_profile.md`](../03%20Intelligence/default_reasoning_profile.md) | How Atlas behaves before personalization exists — the canonical Atlas Defaults |
-| [`human_decision_authority.md`](../03%20Intelligence/human_decision_authority.md) | Who holds final human authority in every scenario |
-| [`current_session.md`](../03%20Intelligence/current_session.md) | What is true today — context, never identity |
-| [`memory_model.md`](../03%20Intelligence/memory_model.md) | How Atlas remembers, updates, replaces, and forgets |
+| [`coaching-dna.md`](../constitution/intelligence-core/coaching-dna.md) | How Atlas thinks as a coach — the conscience, the Identity Hierarchy, the Decision Hierarchy |
+| [`table-tennis-knowledge.md`](../constitution/intelligence-core/table-tennis-knowledge.md) | What Atlas knows about the sport — the concept schema and relationship model |
+| [`reasoning-model.md`](../constitution/intelligence-core/reasoning-model.md) | How Atlas reasons — the thirteen-stage reasoning lifecycle |
+| [`priority-engine.md`](../constitution/intelligence-core/priority-engine.md) | How Atlas decides what deserves attention — WORK NOW / MONITOR / WAIT |
+| [`training-model.md`](../constitution/intelligence-core/training-model.md) | How Atlas turns priorities into training |
+| [`default-reasoning-profile.md`](../constitution/intelligence-core/default-reasoning-profile.md) | How Atlas behaves before personalization exists — the canonical Atlas Defaults |
+| [`human-decision-authority.md`](../constitution/intelligence-core/human-decision-authority.md) | Who holds final human authority in every scenario |
+| [`current-session.md`](../constitution/intelligence-core/current-session.md) | What is true today — context, never identity |
+| [`memory-model.md`](../constitution/intelligence-core/memory-model.md) | How Atlas remembers, updates, replaces, and forgets |
 
 A formal architectural audit of this set identified four critical blockers: an authority model with no valid subject where no coach exists (C1); `Atlas Defaults` referenced throughout but never defined (C2); `Current Session` mandated by the Decision Hierarchy but undefined (C3); and a mandatory memory lifecycle stage whose structure was unspecified (C4). Each has since been resolved by a dedicated document or amendment.
 
@@ -81,7 +81,7 @@ Specifically:
 
 - **The Core is now more expensive to change**, by design. Correcting a genuine conceptual error requires an ADR rather than an edit. This friction is the intended cost of stability.
 - **36 open questions are inherited, not resolved.** Several — notably the promotion threshold from context to identity, appearing in three documents — will require answers before or during implementation.
-- **Memory governance remains outstanding.** What may be remembered, for how long, and under whose consent is a policy decision deliberately excluded from the Intelligence Core. `memory_model.md` is built to accommodate restrictive answers, but the decision is still owed and belongs in Governance.
+- **Memory governance remains outstanding.** What may be remembered, for how long, and under whose consent is a policy decision deliberately excluded from the Intelligence Core. `memory-model.md` is built to accommodate restrictive answers, but the decision is still owed and belongs in Governance.
 - **Freezing does not validate feasibility.** The Core is conceptually coherent; it has not been proven implementable. Implementation may surface genuine conceptual defects.
 - **Documentation-first carries an inversion risk.** The conceptual layer is currently far more developed than the domain, data, and implementation layers. Subsequent phases must close that gap rather than extend the conceptual layer further.
 

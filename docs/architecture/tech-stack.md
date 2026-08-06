@@ -1,3 +1,14 @@
+# Atlas Tech Stack
+
+> **Status:** Architectural — the technology choices Atlas is built on, and why.
+> **Owns:** which technologies are used at each layer, the reasoning behind each choice, and the current implementation status of each.
+> **Inherits:** [`development-rules.md`](../constitution/development-rules.md) — technology choices are fixed unless explicitly approved.
+> **Does not own:** how features are structured (`development-rules.md` §1, Feature First) · what is persisted ([`data-model.md`](data-model.md)) · domain structure ([`product-architecture.md`](product-architecture.md)).
+> **Amendment:** explicit Product Owner approval. Adding or removing a technology is an architectural decision, not an implementation detail.
+> **Note:** this document supersedes an earlier duplicate that described the UI layer as built on Radix and the authentication layer as lacking server-side validation. Both were stale.
+
+---
+
 # Frontend
 
 Atlas Table Tennis AI is built on **Next.js** with **TypeScript**, styled with **Tailwind CSS**, and composed using **shadcn/ui**.
@@ -38,7 +49,9 @@ Authentication for Atlas Table Tennis AI is handled by **Supabase Auth**, integr
 
 Supabase Auth provides email and password login, magic links, OAuth providers, and session management without requiring a custom authentication system. For a business platform, this reduces security risk and development overhead while supporting standard enterprise login expectations.
 
-**Current implementation status:** authentication is presently handled **client-side** using the browser Supabase client, with client-side route guards. Server-side session validation (for example via `@supabase/ssr` and a server proxy/middleware layer) is **not yet implemented**. This is a known gap recorded here rather than described as if already built; it must be resolved as an explicit architectural decision before sensitive operations or AI requests depend on server-enforced sessions.
+**Current implementation status:** sessions are held in **cookies** via `@supabase/ssr`, and are validated **server-side** in `src/proxy.ts` before any protected route renders. The proxy refreshes tokens and rewrites the rotated cookies onto the response; it calls `getUser()`, which revalidates the token against Supabase, never `getSession()`, whose payload comes straight from the cookie and can be forged. Client-side route guards remain as a second layer that also covers sessions expiring mid-navigation. Password recovery and the PKCE email callback are implemented. *(Delivered in Sprint 1; see [`work/roadmap.md`](../work/roadmap.md).)*
+
+Following the Next.js 16 rename, the server-side entry point is `proxy.ts`, not `middleware.ts`.
 
 **PostgreSQL** row-level security works in conjunction with Supabase Auth so that access control is enforced consistently—from the application layer down to the database. Because UI-level checks are convenience rather than security, row-level security remains the authoritative enforcement boundary.
 

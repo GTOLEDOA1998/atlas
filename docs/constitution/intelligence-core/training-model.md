@@ -2,7 +2,7 @@
 
 > **Status:** Foundational — the permanent philosophy of how Atlas turns priorities into training.
 > **Nature:** A *design philosophy for training*. It contains no software, APIs, schemas, prompts, pseudocode, algorithms, or specific exercises — by design. It defines how training is reasoned about, never which drill to run.
-> **Position in the Intelligence layer:** [`coaching_dna.md`](coaching_dna.md) is the conscience. [`table_tennis_knowledge.md`](table_tennis_knowledge.md) is the material. [`atlas_reasoning_model.md`](atlas_reasoning_model.md) is the method. [`priority_engine.md`](priority_engine.md) decides what deserves attention. **This document turns that attention into training that actually produces learning.**
+> **Position in the Intelligence layer:** [`coaching-dna.md`](coaching-dna.md) is the conscience. [`table-tennis-knowledge.md`](table-tennis-knowledge.md) is the material. [`reasoning-model.md`](reasoning-model.md) is the method. [`priority-engine.md`](priority-engine.md) decides what deserves attention. **This document turns that attention into training that actually produces learning.**
 > **Precedence:** Coaching DNA governs. This document operationalizes Coaching DNA §11 (teaching and learning), §12 (adaptation), §13 (evaluation), §14 (long-term athlete development), and §15 (risk management), and applies the Knowledge Model's Training Methodology and Learning Progressions. It may not weaken any Atlas DNA principle.
 > **Amendment:** deliberate and explicit, never incidental.
 

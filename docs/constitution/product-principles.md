@@ -1,7 +1,7 @@
 # Atlas Product Principles
 
 > **Status:** Product Constitution — the single source of truth for *what Atlas is as a product*.
-> **Companion document:** [`development_rules.md`](../10%20Governance/development_rules.md) governs *how* Atlas is built. This document governs *what* Atlas should be and *why*.
+> **Companion document:** [`development-rules.md`](development-rules.md) governs *how* Atlas is built. This document governs *what* Atlas should be and *why*.
 > **Audience:** Human contributors, product decision-makers, and AI coding assistants (Claude, Cursor, ChatGPT).
 > **Rule of precedence:** When a feature idea, prompt, or request conflicts with these principles, these principles win until they are explicitly amended.
 
@@ -11,7 +11,7 @@ Atlas is an AI-powered platform for **table tennis coaching**. It helps coaches 
 
 ## 1. Product Vision
 
-**Why Atlas exists.** Coaching quality does not scale. A great table tennis coach can only watch so many matches, remember so many patterns, and write so many training plans. The knowledge that separates good players from great ones lives in the coach's head and is spent one athlete at a time. Atlas exists to give that expertise leverage — so a coach's insight reaches more players, more consistently, without diluting quality.
+**Why Atlas exists.** Owned by [`manifesto.md`](manifesto.md), which is the single source of truth for the mission and must not be restated here. In short: coaching quality does not scale, and Atlas exists to give a coach's expertise leverage without diluting it.
 
 **The problem Atlas solves.** Today, analysis is manual, slow, and inconsistent. Coaches rewatch footage by hand, track progress in notebooks and spreadsheets, and rebuild training plans from memory. Players get feedback late, in fragments, and rarely tied to evidence. Atlas replaces that scattered, effortful loop with a single flow: capture play, understand it, act on it.
 

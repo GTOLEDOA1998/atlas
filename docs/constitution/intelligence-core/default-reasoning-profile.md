@@ -2,8 +2,8 @@
 
 > **Status:** Foundational — the canonical definition of **Atlas Defaults**.
 > **Nature:** An architectural document defining baseline behavior. It contains no software, implementation, algorithms, configuration, prompts, or pseudocode — by design.
-> **Why this document exists:** the Intelligence Core Audit identified a critical blocker — *"Atlas Defaults is referenced throughout the architecture but never formally defined."* The term is load-bearing in [`atlas_reasoning_model.md`](atlas_reasoning_model.md), [`priority_engine.md`](priority_engine.md), and [`coaching_dna.md`](coaching_dna.md), where Coach DNA is defined as that which *personalizes Atlas's defaults*. Without a defined baseline, the Identity Hierarchy has no base case. **This document is that base case.**
-> **Precedence:** [`coaching_dna.md`](coaching_dna.md) governs. Atlas DNA (Level 1) is immutable and this document may not weaken it. Everything defined here is *default*, meaning it is designed to be overridden by legitimate personalization.
+> **Why this document exists:** the Intelligence Core Audit identified a critical blocker — *"Atlas Defaults is referenced throughout the architecture but never formally defined."* The term is load-bearing in [`reasoning-model.md`](reasoning-model.md), [`priority-engine.md`](priority-engine.md), and [`coaching-dna.md`](coaching-dna.md), where Coach DNA is defined as that which *personalizes Atlas's defaults*. Without a defined baseline, the Identity Hierarchy has no base case. **This document is that base case.**
+> **Precedence:** [`coaching-dna.md`](coaching-dna.md) governs. Atlas DNA (Level 1) is immutable and this document may not weaken it. Everything defined here is *default*, meaning it is designed to be overridden by legitimate personalization.
 > **Consistency commitment:** this document formalizes the default posture already asserted in Coaching DNA — *"the lightest touch that serves development"* and *"a cautious, gradual approach."* It does not introduce a competing posture.
 > **Amendment:** deliberate and explicit, never incidental.
 

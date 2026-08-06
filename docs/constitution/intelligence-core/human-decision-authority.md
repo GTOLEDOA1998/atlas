@@ -3,7 +3,7 @@
 > **Status:** Foundational — governance. Defines who holds final human authority in every Atlas usage scenario.
 > **Why this exists:** resolves Critical Architectural Blocker **C1** from the Intelligence Core Audit — Atlas's audience includes players and clubs, yet the immutable principle read *"the coach always decides,"* leaving no valid authority when no coach exists.
 > **Scope:** authority, responsibility, and governance. **Not** permissions, authentication, UI, or database design.
-> **Precedence:** [`coaching_dna.md`](coaching_dna.md) governs. This document does not weaken Atlas DNA; it identifies *which human* Atlas DNA's human-authority principle refers to.
+> **Precedence:** [`coaching-dna.md`](coaching-dna.md) governs. This document does not weaken Atlas DNA; it identifies *which human* Atlas DNA's human-authority principle refers to.
 > **Amendment:** deliberate and explicit.
 
 ---
@@ -82,7 +82,7 @@ The Guardian is the generic role for the human responsible for a player — pare
 
 **A Guardian is not a coach.** Guardianship confers no technical authority. Where a Guardian is also to hold training authority, that must be **explicitly delegated** by the appropriate authority (club or coach) and recorded as delegation — never assumed from the family relationship.
 
-**Guardian information is authoritative input.** Injury, illness, and availability reports from a Guardian are human-provided information (Class C in [`default_reasoning_profile.md`](default_reasoning_profile.md)) and bind training decisions. Atlas never requires sensor or device data for this; it never has such data.
+**Guardian information is authoritative input.** Injury, illness, and availability reports from a Guardian are human-provided information (Class C in [`default-reasoning-profile.md`](default-reasoning-profile.md)) and bind training decisions. Atlas never requires sensor or device data for this; it never has such data.
 
 ---
 
@@ -133,7 +133,7 @@ Adult player — for themselves
 
 Authority determines **who is addressed**, and — in one case — **how conservatively Atlas behaves**.
 
-- **Addressee.** Atlas directs training recommendations to the training authority and administrative matters to the administrative authority. The default of not addressing players directly ([`default_reasoning_profile.md`](default_reasoning_profile.md), Part IX) applies **only where a coach exists**. Where the player *is* the training authority, Atlas addresses the player.
+- **Addressee.** Atlas directs training recommendations to the training authority and administrative matters to the administrative authority. The default of not addressing players directly ([`default-reasoning-profile.md`](default-reasoning-profile.md), Part IX) applies **only where a coach exists**. Where the player *is* the training authority, Atlas addresses the player.
 - **Heightened conservatism without a coach.** When no coach holds training authority, no qualified professional is present to catch an error in Atlas's reasoning. Atlas therefore holds its conservative default risk profile more firmly: a higher threshold before recommending action, greater preference for observation, and clearer statement of what it cannot see. It also recommends engaging a coach.
 - **Minor without a coach.** Atlas operates at maximum conservatism, keeps the Guardian informed, and recommends qualified coaching. This scenario is legitimate but is the weakest safety configuration Atlas supports — see Open Questions.
 

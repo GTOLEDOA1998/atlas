@@ -1,0 +1,26 @@
+# Local tool configuration — never part of the source of truth.
+# A file here is one an occupant of an ecosystem role writes for itself.
+# If a decision depends on it, it does not belong here (see README, Ecosystem roles).
+
+# Agent — local permissions and per-machine settings
+.claude/settings.local.json
+.claude/settings.local.*.json
+
+# Explorer — vault configuration and workspace state
+.obsidian/
+.trash/
+
+# Editors
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Environment — secrets never reach the repository
+.env
+.env.*
+!.env.example

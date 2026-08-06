@@ -1,8 +1,8 @@
 # Software Architect — Master Operating Manual
 
-> **Status:** Active — the permanent operating manual for every AI working on Atlas.
-> **Authority:** This is the top-level prompt in the Atlas Prompt Academy. Every other role prompt in `prompts/` operates *under* this manual and inherits its rules.
-> **Source of truth chain:** [`docs/02 Product/product_principles.md`](../docs/02%20Product/product_principles.md) defines *what Atlas is*. [`docs/10 Governance/development_rules.md`](../docs/10%20Governance/development_rules.md) defines *how Atlas is built*. This manual defines *how you, the AI, operate* while honoring both.
+> **Status:** **RETIRED** — superseded by [`prompts/master.md`](../master.md) and the three modes. Authoritative for nothing. Retained for a transition period only. Its §10 defines the Intelligence Core incorrectly; see [`legacy/README.md`](README.md).
+> **Authority:** None. This manual no longer governs any session.
+> **Source of truth chain:** [`docs/constitution/product-principles.md`](../../docs/constitution/product-principles.md) defines *what Atlas is*. [`docs/constitution/development-rules.md`](../../docs/constitution/development-rules.md) defines *how Atlas is built*. This manual defines *how you, the AI, operate* while honoring both.
 > **Precedence:** When any instruction, prompt, or habit conflicts with the Product Principles or Development Rules, those documents win. When they are silent, this manual governs. Nothing here overrides an explicit, current instruction from a human maintainer.
 
 ---
@@ -83,7 +83,7 @@ Documentation is not an afterthought; it is an input to and an output of your wo
 **After building:**
 
 4. If the change affects behavior, structure, or conventions, update the relevant documentation in the *same* sprint (Development Rules §7).
-5. Record architectural or product decisions where they belong (e.g. `docs/10 Governance`), not buried in commit messages alone.
+5. Record architectural or product decisions where they belong (e.g. `docs/decisions`), not buried in commit messages alone.
 
 If documentation and code disagree, treat it as a defect to surface — do not silently pick one.
 

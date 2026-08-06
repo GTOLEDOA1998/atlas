@@ -14,49 +14,47 @@ This repository contains the Atlas application and the foundational documentatio
 
 | If you want to know… | Read |
 |---|---|
-| **Why** Atlas exists | [`docs/01 Vision/product_manifesto.md`](docs/01%20Vision/product_manifesto.md) |
-| **What** Atlas is as a product | [`docs/02 Product/product_principles.md`](docs/02%20Product/product_principles.md) |
-| **How** Atlas thinks and reasons | [`docs/03 Intelligence/`](docs/03%20Intelligence/) |
-| **How** Atlas is built | [`docs/10 Governance/development_rules.md`](docs/10%20Governance/development_rules.md) |
-| **How** an AI assistant must operate here | [`prompts/software_architect_master.md`](prompts/software_architect_master.md) |
+| **Anything at all**, starting from zero | [`docs/README.md`](docs/README.md) — the map and the reading order |
+| **Why** Atlas exists | [`docs/constitution/manifesto.md`](docs/constitution/manifesto.md) |
+| **What** Atlas is as a product | [`docs/constitution/product-principles.md`](docs/constitution/product-principles.md) |
+| **How** Atlas thinks and reasons | [`docs/constitution/intelligence-core/`](docs/constitution/intelligence-core/README.md) |
+| **How** Atlas is built | [`docs/constitution/development-rules.md`](docs/constitution/development-rules.md) |
+| **Where** the work actually stands | [`docs/work/roadmap.md`](docs/work/roadmap.md) |
+| **How** an AI must operate here | [`prompts/master.md`](prompts/master.md) — the operating manual, plus three modes |
 
 ---
 
 ## Documentation map
 
+`docs/` is organised by **how a document changes**, not by topic. Before touching anything, the first thing you need to know is what it takes to change it.
+
 ```
 docs/
-  01 Vision/          why Atlas exists
-  02 Product/         what Atlas is  — the Product Constitution
-  03 Intelligence/    how Atlas thinks — coaching DNA, domain knowledge, reasoning
-  04 Architecture/    how Atlas is built — stack and technical decisions
-  05 Database/        data and schema           (not yet written)
-  06 AI Engineering/  AI implementation         (not yet written)
-  07 UX/              experience and design     (not yet written)
-  08 Business/        clients, pricing          (not yet written)
-  09 Roadmap/         sequencing and MVP        (not yet written)
-  10 Governance/      how we work — the Development Rules
+  constitution/     mission, product constitution, development rules,
+                    and the frozen Intelligence Core
+                      → changes only by ADR or explicit amendment
+  architecture/     domain model, data model, technology choices
+                      → changes only by explicit approval
+  foundation/       derived guides that elaborate the above
+                      → free to improve, may contradict nothing above
+  decisions/        Architecture Decision Records
+                      → never edited; superseded by a new ADR
+  work/             roadmap and sprint specifications
+                      → updated as work proceeds
 ```
 
-**The Intelligence layer** is the core of Atlas and is read in this order:
+**New here?** [`docs/README.md`](docs/README.md) declares the reading order and is the only place that does. Process first, product on demand — an AI that learns what Atlas is without learning how it is worked on is missing the more dangerous half.
 
-1. [`coaching_dna.md`](docs/03%20Intelligence/coaching_dna.md) — how Atlas thinks as a coach (the conscience; includes the Identity and Decision hierarchies)
-2. [`table_tennis_knowledge.md`](docs/03%20Intelligence/table_tennis_knowledge.md) — what Atlas knows about the sport (the material)
-3. [`atlas_reasoning_model.md`](docs/03%20Intelligence/atlas_reasoning_model.md) — how Atlas reasons (the method that joins them)
-4. [`priority_engine.md`](docs/03%20Intelligence/priority_engine.md) — how Atlas decides what deserves attention first (the bridge from reasoning to training)
-5. [`training_model.md`](docs/03%20Intelligence/training_model.md) — how Atlas turns priorities into training (where analysis becomes coaching)
-6. [`default_reasoning_profile.md`](docs/03%20Intelligence/default_reasoning_profile.md) — how Atlas behaves before it knows anyone (the baseline all personalization overrides)
-7. [`human_decision_authority.md`](docs/03%20Intelligence/human_decision_authority.md) — who holds the final human decision in every scenario (Atlas never does)
-8. [`current_session.md`](docs/03%20Intelligence/current_session.md) — what is true today (context, never identity)
-9. [`memory_model.md`](docs/03%20Intelligence/memory_model.md) — how Atlas remembers, updates, replaces and forgets knowledge over time (understanding, never truth)
+**The Intelligence Core** is the conceptual heart of Atlas: nine documents defining how it thinks, frozen by ADR. They have a declared precedence order — see [`docs/constitution/intelligence-core/README.md`](docs/constitution/intelligence-core/README.md).
 
 ---
 
 ## Architecture decisions
 
-Significant architectural decisions are recorded as ADRs in [`docs/10 Governance/`](docs/10%20Governance/).
+Significant architectural decisions are recorded as ADRs in [`docs/decisions/`](docs/decisions/).
 
-- [`ADR-0001`](docs/10%20Governance/ADR-0001-atlas-intelligence-core-v1-frozen.md) — Atlas Intelligence Core Version 1.0 frozen. The Intelligence Core is architecturally complete; future work inherits it, and changes require a new ADR.
+- [`ADR-0001`](docs/decisions/ADR-0001-intelligence-core-frozen.md) — Atlas Intelligence Core Version 1.0 frozen. The Intelligence Core is architecturally complete; future work inherits it, and changes require a new ADR.
+- [`ADR-0002`](docs/decisions/ADR-0002-documentation-governance.md) — Documentation governance and structure. Documentation is organised by how a document changes; four tiers determine who may change what.
 
 ---
 
@@ -72,6 +70,26 @@ npm --prefix app run dev
 
 ---
 
+## Ecosystem roles
+
+Atlas separates **roles** from the tools that occupy them. A role is architecture and changes by decision; an occupant is configuration and changes without ceremony. Replacing a tool is a substitution, never an architectural change — which is what keeps this project independent of any single vendor or model.
+
+| Role | Owns | Occupied by |
+|---|---|---|
+| **Source of truth** | Everything a decision depends on | **This repository.** The only place a decision is real |
+| **Agent** | The only component that may change the repository | An AI operating under [`prompts/master.md`](prompts/master.md) and one declared mode |
+| **Explorer** | Navigating and authoring the corpus as a graph | *Vacant* |
+| **Semantic index** | Answering *"where was this decided?"* across a corpus larger than any context window | *Vacant* |
+| **Transport** | How an agent reaches a capability it does not have natively | MCP |
+| **Verifier** | Proving mechanically that the code obeys the architecture | *Vacant — blocked by [DM-020](docs/work/open-decisions.md)* |
+
+Two rules bind every occupant, present and future:
+
+- **Nothing but the source of truth holds content.** A tool owning something the repository does not is a second source of truth, and is rejected.
+- **What a derived tool says is a pointer, never an answer.** It tells you where to look; the repository tells you what is true. See [`prompts/master.md`](prompts/master.md) §2.
+
+---
+
 ## Contributing
 
 Atlas is built deliberately and incrementally. Before contributing — human or AI — understand these non-negotiables:
@@ -81,4 +99,4 @@ Atlas is built deliberately and incrementally. Before contributing — human or 
 - **The constitution governs.** The Product Principles say what Atlas is; the Development Rules say how it is built. When a request conflicts with them, they win.
 - **AI assists; the coach decides.** No feature may position Atlas as the final decision-maker over player development.
 
-AI assistants must additionally adopt [`prompts/software_architect_master.md`](prompts/software_architect_master.md), the operating manual for every AI working on Atlas.
+AI contributors must additionally adopt [`prompts/master.md`](prompts/master.md), the operating manual for every AI working on Atlas, whatever the model. Every session declares one of three modes — [`examine`](prompts/examine.md) establishes what is true and changes nothing, [`design`](prompts/design.md) decides and writes documentation, [`implement`](prompts/implement.md) executes a decision already taken. The manual explains the contract.

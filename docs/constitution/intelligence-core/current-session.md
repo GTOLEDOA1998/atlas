@@ -3,7 +3,7 @@
 > **Status:** Foundational — defines the final contextual layer of the Decision Hierarchy.
 > **Why this exists:** resolves Critical Architectural Blocker **C3** from the Intelligence Core Audit. *Current Session* is a mandatory, non-reorderable layer of the Decision Hierarchy, yet it was defined only by two divergent inline parentheticals and had no owning document. This is that document.
 > **Scope:** conceptual architecture. No implementation, software, APIs, database design, UI, or algorithms.
-> **Precedence:** [`coaching_dna.md`](coaching_dna.md) governs. Current Session is the **lowest** contextual layer — it grounds a recommendation in today without altering any identity above it.
+> **Precedence:** [`coaching-dna.md`](coaching-dna.md) governs. Current Session is the **lowest** contextual layer — it grounds a recommendation in today without altering any identity above it.
 > **Amendment:** deliberate and explicit.
 
 ---
@@ -42,7 +42,7 @@ Every element of session context belongs to exactly one class. Classifying it is
 | **Historical** | Atlas's own prior record | What was recommended, decided, and observed before | Background context, not session context |
 | **Temporary session context** | Facts of this occasion | Environment, group composition, competition proximity, who is present | Conditions that shape today's design |
 
-**The boundary this enforces.** Atlas is video-first. It sees *behavior*, never *state*. Fatigue, pain, illness, motivation, and readiness are **not observable** — they are declared, or they are unknown. Atlas may observe indicators that prompt a question to the coach; it may never convert an indicator into an asserted state. No wearable, physiological, or sensor data is assumed to exist. See [`default_reasoning_profile.md`](default_reasoning_profile.md) for the full observability constraint.
+**The boundary this enforces.** Atlas is video-first. It sees *behavior*, never *state*. Fatigue, pain, illness, motivation, and readiness are **not observable** — they are declared, or they are unknown. Atlas may observe indicators that prompt a question to the coach; it may never convert an indicator into an asserted state. No wearable, physiological, or sensor data is assumed to exist. See [`default-reasoning-profile.md`](default-reasoning-profile.md) for the full observability constraint.
 
 ---
 
@@ -85,7 +85,7 @@ Session information divides by **the lifetime of what it describes**, not by whe
 
 **It does not include:** who the player is · how this coach coaches · what the group is for · what the club believes · anything Atlas concluded before today. Those are identity layers and are reasoned about separately.
 
-**It does not decide anything.** Like Group DNA, Current Session is a *context*, not an authority. Authority for the session rests with the human training authority defined in [`human_decision_authority.md`](human_decision_authority.md) — normally the assigned coach, and where a temporary coach is covering, that coach for the sessions covered.
+**It does not decide anything.** Like Group DNA, Current Session is a *context*, not an authority. Authority for the session rests with the human training authority defined in [`human-decision-authority.md`](human-decision-authority.md) — normally the assigned coach, and where a temporary coach is covering, that coach for the sessions covered.
 
 ---
 
@@ -93,7 +93,7 @@ Session information divides by **the lifetime of what it describes**, not by whe
 
 **Before — establishing context.** Atlas assembles what is known: standing priorities and objectives, plus declared conditions still in force from earlier sessions. Where safety-relevant information is missing or stale, Atlas asks rather than assumes. Design is proposed against this context.
 
-**During — adaptation in the moment.** Reality diverges from plans: players are absent, someone declares a problem, energy is not what was expected. The coach adapts; Atlas's proposals were designed to be modified, not executed (see [`training_model.md`](training_model.md)). Anything newly declared takes effect immediately, especially anything touching safety.
+**During — adaptation in the moment.** Reality diverges from plans: players are absent, someone declares a problem, energy is not what was expected. The coach adapts; Atlas's proposals were designed to be modified, not executed (see [`training-model.md`](training-model.md)). Anything newly declared takes effect immediately, especially anything touching safety.
 
 **After — separation.** Session context is separated into what expires and what persists (§4), and the record of the occasion enters Atlas's historical evidence. Observations from the session become input to reasoning; they do not become identity by virtue of having happened once.
 
@@ -130,13 +130,13 @@ Session information divides by **the lifetime of what it describes**, not by whe
 
 ## Open Architectural Questions
 
-1. **The promotion threshold from session context to Player DNA is undefined (High).** Repetition converts session information into identity, but how much repetition is required is unspecified. Too eager and a rough week becomes a permanent label; too reluctant and a genuine decline goes unrecognized. This mirrors the unresolved default-to-personalized threshold in `default_reasoning_profile.md`.
+1. **The promotion threshold from session context to Player DNA is undefined (High).** Repetition converts session information into identity, but how much repetition is required is unspecified. Too eager and a rough week becomes a permanent label; too reluctant and a genuine decline goes unrecognized. This mirrors the unresolved default-to-personalized threshold in `default-reasoning-profile.md`.
 
 2. **Staleness of ongoing declarations has no defined handling (High).** Ongoing declarations expire only by human action — correct for safety, but an injury declared months ago and never lifted will constrain training indefinitely. When Atlas should re-ask, and how insistently, is unresolved.
 
 3. **Sessions may not be discrete (Medium).** The lifecycle assumes a bounded occasion with a start and end. Continuous play, multi-part sessions, and video covering several sessions do not map cleanly onto this boundary.
 
-4. **Declaration authority is not fully specified (Medium).** Coach, guardian, and player may all declare. Where two declarations about the same session conflict, `human_decision_authority.md` resolves who *decides*, but not whose *declaration of fact* prevails.
+4. **Declaration authority is not fully specified (Medium).** Coach, guardian, and player may all declare. Where two declarations about the same session conflict, `human-decision-authority.md` resolves who *decides*, but not whose *declaration of fact* prevails.
 
 5. **Group composition divergence is unmodeled at scale (Medium).** Today's composition may differ from standing membership. Persistent divergence — a group whose actual attendance never matches its definition — is a signal about the group that nothing currently interprets.
 

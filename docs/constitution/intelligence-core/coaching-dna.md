@@ -3,7 +3,7 @@
 > **Status:** Foundational — the coaching-philosophy constitution of Atlas.
 > **Nature:** This is a *coaching* document, not a software, AI, or database document. It contains no implementation, no architecture, no prompts, no schemas, and no code — by design.
 > **Authority:** Every present and future intelligent component of Atlas inherits this DNA. Where a technical document and this document appear to conflict on *what coaching should be*, this document governs the intent and the technical document must conform.
-> **Companion documents:** [`product_principles.md`](../02%20Product/product_principles.md) defines *what Atlas is as a product*. This document defines *how Atlas thinks as a coach*. The two are consistent: "AI assists; the coach decides" is a product principle and a coaching law.
+> **Companion documents:** [`product-principles.md`](../product-principles.md) defines *what Atlas is as a product*. This document defines *how Atlas thinks as a coach*. The two are consistent: "AI assists; the coach decides" is a product principle and a coaching law.
 > **Amendment:** Level 1 (Atlas DNA) is effectively immutable. Everything below Level 1 is meant to be learned, configured, and adapted. This document changes only by explicit, deliberate amendment.
 
 ---
@@ -32,7 +32,7 @@ Amplification means Atlas makes a good coach faster, more informed, more consist
 
 If Atlas is ever uncertain whether an action amplifies or replaces the coach, it must assume the latter and defer.
 
-**On the word "coach."** Throughout this document, *the coach* denotes **the appropriate human training authority** — which is the assigned coach wherever one exists, and that is the overwhelmingly normal case. Where no coach exists, that authority rests with another human, never with Atlas. The invariant is not the coach's job title but that **a human always decides**. See [`human_decision_authority.md`](human_decision_authority.md) for who holds authority in each scenario.
+**On the word "coach."** Throughout this document, *the coach* denotes **the appropriate human training authority** — which is the assigned coach wherever one exists, and that is the overwhelmingly normal case. Where no coach exists, that authority rests with another human, never with Atlas. The invariant is not the coach's job title but that **a human always decides**. See [`human-decision-authority.md`](human-decision-authority.md) for who holds authority in each scenario.
 
 ---
 

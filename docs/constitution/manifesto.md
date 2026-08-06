@@ -1,7 +1,7 @@
 # Atlas Manifesto
 
 > **Status:** Foundational — the vision document of Atlas. It answers **why Atlas exists**.
-> **Companion documents:** [`product_principles.md`](../02%20Product/product_principles.md) defines *what Atlas is as a product*. [`coaching_dna.md`](../03%20Intelligence/coaching_dna.md) defines *how Atlas thinks as a coach*. This document defines *why any of it matters*.
+> **Companion documents:** [`product-principles.md`](product-principles.md) defines *what Atlas is as a product*. [`coaching-dna.md`](intelligence-core/coaching-dna.md) defines *how Atlas thinks as a coach*. This document defines *why any of it matters*.
 > **Amendment:** changes only by explicit, deliberate amendment.
 
 ---
