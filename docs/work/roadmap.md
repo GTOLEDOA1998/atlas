@@ -20,14 +20,14 @@
 | **S1** | Authentication | ✅ **Complete** |
 | **S2** | Application Shell | ✅ **Complete** |
 | **D1** | Documentation foundation and governance | ✅ **Complete** — ADR-0002 |
-| **F2** | Data Model | 🟠 **Candidate** — redesigned against thirteen approved decisions; not approved as a whole |
-| **DM** | Open architectural decisions | 🟡 **Eight open** — DM-013 … DM-016 · DM-017A · DM-019 · DM-020 · DM-022 |
-| **G1** | Memory governance | 🟠 **Drafted, not approved** — [`memory-governance.md`](../constitution/memory-governance.md) answers all five questions; still blocking until approved |
-| **F3** | Software Design Specification · Database Design Specification | 🚧 **In progress** — [`sds.md`](../architecture/sds.md) written (ten sections; six complete, three blocked in part) and [`dbds.md`](../architecture/dbds.md) written (blueprint complete where the domain is decided). **Neither approved** |
-| **S3** | Players | 🔒 **Blocked** — planned in [`sprints/sprint-03-players.md`](sprints/sprint-03-players.md) with an execution [`runbook`](sprints/sprint-03-execution-runbook.md); its five start criteria (§7) are unmet |
+| **F2** | Data Model | ✅ **Approved** — 2026-08-05, by explicit Product Owner decision on the F2 Final Audit; prerequisites (G1, DM-013/14/15) met; DM-016/017A/019/022 deliberately deferred |
+| **DM** | Open architectural decisions | 🟡 **Five open** — DM-016 · DM-017A · DM-019 · DM-020 · DM-022 *(DM-013/14/15 resolved 2026-08-05)* |
+| **G1** | Memory governance | ✅ **Resolved** — [`memory-governance.md`](../constitution/memory-governance.md) accepted as Tier 1 policy by [`ADR-0003`](../decisions/ADR-0003-memory-governance.md) (2026-08-05); `memory-model.md` Open Question 1 closed |
+| **F3** | Software Design Specification · Database Design Specification | 🚧 **In progress** — [`sds.md`](../architecture/sds.md) written, **not approved**; [`dbds.md`](../architecture/dbds.md) written, **Part II + Part IV C3-scoped-approved (2026-08-05)**, full DBDS closure still pending (Part VIII decisions) |
+| **S3** | Players | 🟢 **Gate green, not started** — the five S3.0 start criteria (§7) are all met (2026-08-05); planned in [`sprints/sprint-03-players.md`](sprints/sprint-03-players.md) with an execution [`runbook`](sprints/sprint-03-execution-runbook.md). Migration 0001 (S3.1) has not begun |
 | **S4+** | Media · Perception · Analysis · Objectives · Training · Library · Assistant | ⬜ Sequenced below |
 
-**Three things block everything downstream: F2, G1, and the eight open decisions.** None is a coding task.
+**The S3.0 entry gate is now GREEN (5/5, 2026-08-05): F2 approved, G1 resolved, DBDS Part II+IV C3-approved, legacy migration reconciled (archived), bootstrap specified.** Migration 0001 (S3.1) has not begun. The remaining downstream items are a migration-application path (CLI/link or dashboard, credentials) for when S3.1 runs, and the five open decisions where they bite in later sprints. *(DM-013/14/15 were resolved 2026-08-05.)*
 
 ---
 
@@ -47,15 +47,15 @@ F1 Domain Model  ✅
         ├──────────────▶ D1 Documentation governance  ✅  (ADR-0002)
         │
         ▼
-F2 Data Model  🟠 candidate
+F2 Data Model  ✅ approved
         │
-        │  ┌── G1 Memory governance  🟠 drafted · still blocking
+        │  ┌── G1 Memory governance  ✅ resolved (ADR-0003)
         │  │
         ▼  ▼
 F3 Software Design Specification  🚧 sds.md written
         │
         ▼
-   Database Design Specification  🚧 dbds.md written
+   Database Design Specification  🚧 Part II + IV C3-approved · full closure pending
         │                            the physical blueprint; inherits the SDS,
         │                            not a new phase (ADR-0001 unchanged)
         ▼
@@ -146,7 +146,7 @@ S4 Media ──▶ S5 Perception ──▶ S6 Analysis
 
 ---
 
-## F2 · Data Model — 🟠 Candidate
+## F2 · Data Model — ✅ Approved
 
 **Objective.** Define what Atlas persists, under whose ownership, with what lifecycle, and what it must never store — before a single table exists.
 
@@ -158,21 +158,21 @@ S4 Media ──▶ S5 Perception ──▶ S6 Analysis
 
 **Redesigned.** A domain audit found three entities with the wrong responsibility, one Core concept absent, and the reserved-names table contradicted in two of its four rows. Thirteen decisions were approved and the document was rebuilt against them: `Observation` restored; `Priority` relocated from the analysis to the player; the declaration replaced the per-occasion container; `Workspace`, `SessionContext`, `HistoricalRecord`, `CoachIdentity` and `PlayerIdentity` withdrawn; the subject invariant widened to the four identity subjects. Four amendments to [`product-architecture.md`](../architecture/product-architecture.md) followed and are recorded in its Amendment line.
 
-**Completion criterion.** Approved, **G1 resolved**, and DM-013 … DM-015 answered. The structure is built to accommodate restrictive governance answers, but the answers are still owed.
+**Completion criterion — met.** Approved and **G1 resolved**. G1 was resolved by [`ADR-0003`](../decisions/ADR-0003-memory-governance.md) on 2026-08-05, and the three Part VII prerequisites DM-013/14/15 were answered the same day (recorded in `data-model.md`). **The Product Owner approved F2 on 2026-08-05** on the basis of the F2 Final Audit; the document is now *Approved* and is the contractual Data Model base. DM-016/017A/019/022 were deliberately deferred and remain Open.
 
 **Risks.** The largest is that ownership boundaries and metric versioning are nearly free before the first row and nearly impossible after. Getting either wrong means migrating live data about real people.
 
 ---
 
-## G1 · Memory governance — 🟠 Drafted, not approved
+## G1 · Memory governance — ✅ Resolved
 
 **Objective.** Decide what may be remembered, for how long, and under whose consent.
 
-**Document.** [`memory-governance.md`](../constitution/memory-governance.md) — a Tier 1 constitution policy answering all five questions below. **Drafted this session; awaiting formal approval.** It still blocks everything downstream until approved, which is why the state is amber, not green.
+**Document.** [`memory-governance.md`](../constitution/memory-governance.md) — a Tier 1 constitution policy answering all five questions below. **Accepted 2026-08-05 by [`ADR-0003`](../decisions/ADR-0003-memory-governance.md)**, which adopts it as it stands and formally closes `memory-model.md` Open Question 1. It no longer blocks downstream work.
 
 **Dependencies.** None. It is a policy decision, not a technical one — which is why nothing unblocks it except making it.
 
-**Why it blocks.** `memory-model.md` Open Question 1 and ADR-0001 both record this as owed and **deliberately excluded** from the Intelligence Core. It did not block anything until now. It blocks S3, because S3 creates the first persistent record of a person — frequently **a minor**.
+**Why it blocked (historical).** `memory-model.md` Open Question 1 and ADR-0001 both recorded this as owed and **deliberately excluded** from the Intelligence Core. It blocked S3 — S3 creates the first persistent record of a person, frequently **a minor** — until it was resolved by ADR-0003.
 
 **Five questions.**
 
@@ -182,15 +182,15 @@ S4 Media ──▶ S5 Perception ──▶ S6 Analysis
 4. How much superseded-interpretation history is retained? *(Currently unbounded)*
 5. What exactly does directed forgetting mean: withdrawal from the subject, deletion of the fact, or both?
 
-**Completion criterion.** A Governance document answering all five, recorded as an ADR.
+**Completion criterion — met.** A Governance document answering all five, recorded as an ADR — `memory-governance.md`, recorded by [`ADR-0003`](../decisions/ADR-0003-memory-governance.md).
 
 ---
 
-## DM · Open architectural decisions — 🟡 Eight open
+## DM · Open architectural decisions — 🟡 Five open
 
 **Register.** [`open-decisions.md`](open-decisions.md).
 
-**State.** DM-001 … DM-012 approved, plus **DM-021** (the SDS covers the whole product), **DM-023** (`Profile` withdrawn) and **DM-018** (the athlete is `Player` the person plus `RosterMembership` the club relationship; the former DM-017B is absorbed). Each is recorded in the document it changed. **DM-013 … DM-016, DM-017A, DM-019, DM-020 and DM-022 remain open.** DM-016 moves a boundary in the Aggregate Map; DM-014 fixes a safety-relevant policy; DM-020 gates SDS §9. The former DM-026 and DM-027 were withdrawn as non-architectural — the provisioning mechanism is now specified in `sds.md` §5.6 and the display-name source a Sprint 3 implementation note. **DM-025** — surfaced during Sprint 3 preparation as a Migration 0001 blocker (how the Recording Authority assertion is persisted) — was **resolved** into the `RecordingAssertion` structure (`data-model.md` §2.4b); it no longer blocks.
+**State.** DM-001 … DM-012 approved, plus **DM-021** (the SDS covers the whole product), **DM-023** (`Profile` withdrawn), **DM-018** (the athlete is `Player` the person plus `RosterMembership` the club relationship; the former DM-017B is absorbed), **DM-025** (the `RecordingAssertion` structure), and — on **2026-08-05** — the three Part VII decisions **DM-013** (`Training : TrainingSession` = 1:1), **DM-014** (minimal authority model persisted on `Declaration`), and **DM-015** (`LibraryConcept`/`Exercise` a curated family outside the four classes). Each is recorded in the document it changed (`data-model.md`, reflected in `dbds.md`/`sds.md`). **DM-016, DM-017A, DM-019, DM-020 and DM-022 remain open.** DM-016 moves a boundary in the Aggregate Map; DM-020 gates SDS §9. The former DM-026 and DM-027 were withdrawn as non-architectural — the provisioning mechanism is now specified in `sds.md` §5.6 and the display-name source a Sprint 3 implementation note.
 
 **Dependencies.** None. Each is a decision, not work.
 
@@ -211,7 +211,7 @@ S4 Media ──▶ S5 Perception ──▶ S6 Analysis
 | Document | State |
 |---|---|
 | [`sds.md`](../architecture/sds.md) — the contract between the approved architecture and the implementation | **Written.** Ten sections; by its own status line, *six complete, three blocked in part by open decisions*. Scope fixed by **DM-021**: it describes the complete product, and sprints consume it. §5.6 (the tenancy-bootstrap provisioning mechanism) is **specified**, closing the last specification gap. **Not approved** |
-| [`dbds.md`](../architecture/dbds.md) — the physical blueprint | **Written.** Structures, conceptual columns, cardinalities, integrity constraints, the conceptual access model and access patterns. Blocked points are marked ⚠️ at the exact column they block. **Not approved** |
+| [`dbds.md`](../architecture/dbds.md) — the physical blueprint | **Written. Part II (seven startup structures) + Part IV (access model) C3-scoped-approved 2026-08-05**, with DM-017A's Group/Session extension explicitly deferred. **Full DBDS closure still pending** — Part I/III/V/VI and the Part VIII decisions are outside the C3 approval |
 
 The Aggregate Map and the Persistence Model, previously tracked here as prepared-but-unwritten, are **§2 and §3 of the SDS** — sections of this phase, not phases of their own. The DBDS likewise inherits the SDS rather than succeeding it. **ADR-0001 is unchanged** and its four-phase sequence stands.
 
@@ -251,7 +251,7 @@ Not a phase. Three artifacts written to carry the implementation, recorded here 
 
 **Prepared by S2.** Navigation entry flips from `planned` to `live`; page primitives exist; the service-boundary pattern is established; the header context region is waiting.
 
-**Planned, not started.** Two work documents exist and this roadmap does not restate them: [`sprints/sprint-03-players.md`](sprints/sprint-03-players.md) holds the stories, their order and their acceptance criteria, and fixes in §7 the five criteria that must hold before Migration 0001 may begin; [`sprints/sprint-03-execution-runbook.md`](sprints/sprint-03-execution-runbook.md) sequences the execution in six phases. The gate is unmet: F2, G1 and the DBDS startup structures await approval, and the legacy migration awaits reconciliation.
+**Gate green, not started.** Two work documents exist and this roadmap does not restate them: [`sprints/sprint-03-players.md`](sprints/sprint-03-players.md) holds the stories, their order and their acceptance criteria, and fixes in §7 the five criteria that must hold before Migration 0001 may begin; [`sprints/sprint-03-execution-runbook.md`](sprints/sprint-03-execution-runbook.md) sequences the execution in six phases. **All five S3.0 criteria are met (2026-08-05):** F2 approved, G1 resolved, DBDS Part II+IV C3-approved, legacy migration reconciled (archived to `supabase/legacy/`), bootstrap specified. Migration 0001 (S3.1) has not begun.
 
 ---
 

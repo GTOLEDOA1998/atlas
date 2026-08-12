@@ -61,7 +61,7 @@ Sprint-agnostic guidance (10) is permanent; the execution artifacts (11, 12) are
 
 ### The four tiers
 
-Recorded decisions: [`ADR-0001`](decisions/ADR-0001-intelligence-core-frozen.md) froze the Intelligence Core; [`ADR-0002`](decisions/ADR-0002-documentation-governance.md) established this governance model.
+Recorded decisions: [`ADR-0001`](decisions/ADR-0001-intelligence-core-frozen.md) froze the Intelligence Core; [`ADR-0002`](decisions/ADR-0002-documentation-governance.md) established this governance model; [`ADR-0003`](decisions/ADR-0003-memory-governance.md) accepted the memory-governance policy and closed the Core's memory-governance open question.
 
 **Tier 1 — Constitution.** The nine Intelligence Core documents change only by ADR. `manifesto.md`, `product-principles.md` and `development-rules.md` change only by explicit recorded amendment. ADRs are never edited.
 

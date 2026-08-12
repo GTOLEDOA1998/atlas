@@ -7,7 +7,8 @@
 > **Precedence:** Atlas DNA governs absolutely. Then the Intelligence Core. Then this document. **Where this policy appears to contradict the Core, this policy is defective.**
 > **Amendment:** explicit and recorded. A change that would require amending the Intelligence Core requires an ADR.
 > **Amended 2026-08-04:** §11 records **DM-025 as resolved** — the persistence shape of the Recording Authority assertion and the L4 tombstone is the `RecordingAssertion` structure ([`data-model.md`](../architecture/data-model.md) §2.4b). The semantics in §2, §3, §8, §9 are unchanged.
-> **Resolves:** G1 — the memory-governance blocker recorded in [`ADR-0001`](../decisions/ADR-0001-intelligence-core-frozen.md), [`memory-model.md`](intelligence-core/memory-model.md) Open Question 1, and [`data-model.md`](../architecture/data-model.md) Part V.
+> **Accepted 2026-08-05** as the governing Tier 1 memory-governance policy by [`ADR-0003`](../decisions/ADR-0003-memory-governance.md). No substantive content was changed by acceptance; the ADR adopts this document as it stands and closes `memory-model.md` Open Question 1.
+> **Resolves:** G1 — the memory-governance blocker recorded in [`ADR-0001`](../decisions/ADR-0001-intelligence-core-frozen.md), [`memory-model.md`](intelligence-core/memory-model.md) Open Question 1, and [`data-model.md`](../architecture/data-model.md) Part V. **Formally resolved by [`ADR-0003`](../decisions/ADR-0003-memory-governance.md) (2026-08-05).**
 
 ---
 

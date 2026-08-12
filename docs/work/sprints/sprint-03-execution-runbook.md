@@ -78,7 +78,9 @@ P1 Environment ─▶ P2 Legacy 0001 (verify only) ─▶ P3 Migration 0001 ─�
 
 # Phase 2 · Legacy `0001` reconciliation — verify only, change nothing
 
-*`supabase/migrations/0001_atlas_core.sql` exists, is declared superseded by `sds.md` §4.8, and its applied state is unverified. This phase establishes facts and records a chosen path. It modifies nothing.*
+> **✅ Executed 2026-08-05.** Outcome: the legacy migration's applied state was established as **not applied** (Supabase `public` = 0 tables; none of the six legacy tables exists; no applied migration history), and the artifact was **archived** from `supabase/migrations/` to `supabase/legacy/0001_atlas_core.sql` by Product Owner authorisation — no SQL run, Supabase not modified. The authoritative record lives in [`sprint-03-players.md`](sprint-03-players.md) S3.0. The steps below are retained as the reusable procedure (e.g. for a fresh environment).
+
+*Originally: the legacy `0001` existed under `supabase/migrations/`, was declared superseded by `sds.md` §4.8, and its applied state was unverified. This phase establishes facts and records a chosen path.*
 
 ### Step 2.1 — Establish the applied state
 

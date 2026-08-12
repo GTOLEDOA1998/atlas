@@ -125,7 +125,7 @@ Each gap is evidence-backed. None is resolved here.
 
 **GAP-4 · Dashboard-scope ownership overlaps across tiers — self-declared and unresolved.** VERIFIED. `ADR-0002:130`: Dashboard scope is defined in `product-principles.md §6` (Tier 1) and narrowed in `product-architecture.md §1.3` (Tier 2); *"a Tier 2 document narrowing a Tier 1 one without declaring it is an ambiguity. It awaits a decision."* *Category: duplicate/ambiguous authority — acknowledged by governance itself.*
 
-**GAP-5 · A required ADR does not exist.** VERIFIED. `memory-governance.md` (G1) completion requires recording as an ADR (`roadmap.md` G1 section; `ADR-0001:95`), and `docs/decisions/` contains only ADR-0001 and ADR-0002. *Category: missing artifact within the governance process.*
+**GAP-5 · The required G1 ADR — NOW RESOLVED.** `memory-governance.md` (G1) completion required recording as an ADR (`roadmap.md` G1 section; `ADR-0001:95`). **`ADR-0003` was created on 2026-08-05**, adopting `memory-governance.md` and closing `memory-model.md` Open Question 1. The gap is closed; recorded here for traceability.
 
 **No circular authority was found.** INFERENCE — the inheritance chain (Core → Constitution → product-architecture → data-model → sds → dbds; foundation and work below their owners) is acyclic across all `Precedence`/`Inherits` fields inspected. `roadmap.md` and `sprints/` reference each other but own different things (`roadmap.md:9` *"Does not own: what a sprint specified"*), so the mutual reference is not circular authority.
 
@@ -159,7 +159,7 @@ Per canonical document: `Owns` / `Does Not Own` / authority / change process / d
 | `sprint-03-execution-runbook.md` | Operational execution order (`:5`) | Any rule in the docs it points at | Tier 4 | Freely (`:9`) | sprint-03-players, arch docs |
 | `traceability-matrix.md` | Architecture↔execution trace + status (`:5`) | Content of any element; execution order | Tier 4 | Freely (`:8`) | arch docs, roadmap, open-decisions, sprints |
 | `prompts/master.md` | AI-contributor identity, precedence, mode ceiling (`:4`) | What/how/persistence/vocabulary/state (`:does-not-own`) | Undeclared tier (GAP-2) | Deliberate+explicit (`:8`) | product-principles, dev-rules, Core, ADRs |
-| `ADR-0001` / `ADR-0002` | The two recorded architectural decisions | — | Tier 1 (decisions) | **Never edited; superseded only** (`ADR-0002:71`) | — |
+| `ADR-0001` / `ADR-0002` / `ADR-0003` | The three recorded architectural decisions (Core frozen · doc governance · memory governance accepted) | — | Tier 1 (decisions) | **Never edited; superseded only** (`ADR-0002:71`) | — |
 
 *Referenced By (partial, VERIFIED inbound links):* the Intelligence Core is referenced by nearly every Tier 2 document's `Inherits` line; `ADR-0001`/`ADR-0002` are referenced by `README.md`, `roadmap.md`, and every `Inherits` field; `sds.md §5.6` is referenced by `sprint-03-players.md` and `roadmap.md`. A complete inbound-reference index was **not computed** and is marked INSUFFICIENT EVIDENCE for exhaustiveness.
 

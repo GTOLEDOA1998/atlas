@@ -1,6 +1,6 @@
 # Atlas Software Design Specification
 
-> **Status:** Under construction. Six sections complete, three blocked in part by open decisions. **Not approved.** The SDS cannot close before F2 is approved and G1 resolved.
+> **Status:** Under construction. Six sections complete, three blocked in part by open decisions. **Not approved.** G1 is resolved (ADR-0003); the SDS cannot close before F2 is approved.
 > **Owns:** everything a developer needs to implement Atlas that no approved document already states — consistency boundaries, persistence behaviour, data structure, access control, media and asynchrony, the perception and intelligence contracts, and how the architecture's invariants are enforced.
 > **Inherits:** the Intelligence Core, frozen by [`ADR-0001`](../decisions/ADR-0001-intelligence-core-frozen.md) · the Product Constitution · [`product-architecture.md`](product-architecture.md) · [`data-model.md`](data-model.md) · [`tech-stack.md`](tech-stack.md) · [`development-rules.md`](../constitution/development-rules.md).
 > **Does not own:** what Atlas is, how it thinks, what entities exist, how code is styled, or where the work stands. Each has an owning document and §1 names it.
@@ -132,7 +132,7 @@ Two rules bind every one of them: references toward a fact must be **enumerable 
 
 **`Assignment` lives inside `RosterMembership`** (DM-018): training authority exists within the athlete's relationship with a club and ends with it. What remains of the former DM-017 is **DM-017A** only — whether an assignment may *also* target a group or a session.
 
-**Blocked:** the boundaries of `TrainingSession` (DM-013) and `Plan` (DM-016).
+**Blocked:** the boundaries of `Plan` (DM-016). *(The `TrainingSession` boundary is unblocked: DM-013 fixed `Training : TrainingSession` at `1:1`, so `TrainingSession` references exactly one `Training` — root-vs-contained is now a physical choice, not a domain question.)*
 
 ---
 
@@ -148,7 +148,7 @@ Two rules bind every one of them: references toward a fact must be **enumerable 
 | **Immutable-on-commit** | Written once at a human decision point | *Decision* |
 | **Superseding** | A current version plus retained priors | *Interpretation* |
 | **Stateful** | A living record whose state changes, **always with the reason recorded** | State machines |
-| **Curated** | Deliberately authored and versioned over years | Knowledge ⚠️ DM-015 |
+| **Curated** | Deliberately authored and versioned over years | Knowledge/practice — a family **outside the four data classes** (DM-015) |
 
 ## 3.2 One deletion mechanism
 
@@ -236,7 +236,7 @@ Five are emphasised because they are **not notifications — they are learning s
 
 In Atlas the trail is not for auditors. **It is the material from which Coach DNA is formed.**
 
-Permanently retained: the source class of every memory (`observed` / `declared` / `reasoned`) · **the Recording Authority under which each subject's memory is held — who asserted it and when (`RecordingAssertion`, DM-025)** · the declarer and their authority on every declaration ⚠️ DM-014 · that Atlas asserted X on date Y · the original proposal alongside the coach's modification · who accepted an objective, when, and its outcome · what every interpretation was derived from ⚠️ DM-022.
+Permanently retained: the source class of every memory (`observed` / `declared` / `reasoned`) · **the Recording Authority under which each subject's memory is held — who asserted it and when (`RecordingAssertion`, DM-025)** · the declarer and their authority on every declaration (DM-014, minimal scope) · that Atlas asserted X on date Y · the original proposal alongside the coach's modification · who accepted an objective, when, and its outcome · what every interpretation was derived from ⚠️ DM-022.
 
 **Never audited:** judgment of a person as a professional. *"Memory is never used to grade a human."*
 
@@ -276,7 +276,7 @@ Every aggregate root carries an **opaque, system-generated, permanent identity**
 | A `Measurement` references a definition **and its version**. Measurements from different definitions are never compared | `data-model.md` §2.12 |
 | A `Priority` carries its full state history with a reason per transition, its deferral account and its alternatives | `priority-engine.md` Part VIII |
 | An `Objective` carries a `Justification` frozen at acceptance, structurally independent of the priority that produced it | DM-005b |
-| A `Declaration` carries its declarer and the authority under which it was made | `data-model.md` §1.2 ⚠️ **DM-014** |
+| A `Declaration` carries its declarer and the authority under which it was made; the declarer may be a party without a `User` account, recorded minimally | `data-model.md` §1.2, §2.9 (DM-014, minimal scope) |
 | Every interpretation carries provenance, confidence, formation date and occasion count | §1.2, §1.4 |
 | A `Training` holds the proposal and the modification as **two records**, never one edited | `training-model.md` Part VIII |
 
@@ -306,17 +306,17 @@ This is the single most important integrity rule in Atlas and the one the reposi
 
 | Blocked point | By |
 |---|---|
-| Whether `TrainingSession` is a structure of its own or part of `Training` | **DM-013** |
-| The class, and therefore the lifecycle rules, of `LibraryConcept` and `Exercise` | **DM-015** |
 | Whether `Plan` is a structure of its own | **DM-016** |
 | Whether an `Assignment` may also target a group or a session | **DM-017A** |
 | The granularity of derivation tracking | **DM-022** *(new — §10)* |
 
 ## 4.8 Inherited risk
 
-`supabase/migrations/0001_atlas_core.sql` exists in the repository, is referenced by no document, enables no access control, and contradicts the domain model in four of its six tables — most gravely by requiring every player to hold an account.
+The legacy `0001_atlas_core.sql` (now archived — see below) is referenced by no document, enables no access control, and contradicts the domain model in four of its six tables — most gravely by requiring every player to hold an account.
 
-> **This specification declares it superseded in full.** It is not evolved. Its identity strategy, its tenancy (absent), its cascade rules and its vocabulary all predate the approved domain model. Whether it has been applied to a live project is **unverified** and must be established before §5 is implemented.
+> **This specification declares it superseded in full.** It is not evolved. Its identity strategy, its tenancy (absent), its cascade rules and its vocabulary all predate the approved domain model.
+>
+> **Reconciled (C4) — 2026-08-05.** Its applied state is now **established: not applied** — the Supabase `public` schema has 0 tables, none of the six legacy tables exists, and there is no applied migration history. By Product Owner authorisation the artifact was **archived** from `supabase/migrations/` to `supabase/legacy/0001_atlas_core.sql` (content unchanged), so no migration tool treats it as pending. No SQL was run and Supabase was not modified.
 
 ---
 
@@ -353,12 +353,12 @@ Assignment ───────────────────────
 
 - **No cross-owner leakage.** What Atlas learns in one relationship stays in that relationship. One club's learned identity never becomes another's default.
 - **A departing coach's identity memory does not transfer to their successor**, even though the assignment does.
-- **A guardian's safety declaration binds training** even though a guardian holds no technical authority — so the right to write a `Declaration` is not the right to design training. ⚠️ **DM-014**
+- **A guardian's safety declaration binds training** even though a guardian holds no technical authority — so the right to write a `Declaration` is not the right to design training. (DM-014: the declarer and its authority are persisted; the guardian may hold no account.)
 - **Video storage access is mediated, never public.** A footage reference is not a URL anyone holding it may open.
 
-## 5.5 Blocked
+## 5.5 Unblocked — DM-014 resolved
 
-§5 **cannot be completed** until **DM-014** is answered: without the declarer and their authority there is no complete subject to evaluate a declaration policy against. The subject-scoped regime is settled by DM-018; DM-017A affects only whether assignments extend to groups and sessions.
+The declaration policy blocker is cleared. **DM-014 (resolved, minimal scope)** gives `Declaration` a complete subject to evaluate a policy against: the declarer and the authority under which it was made are persisted, and the declarer may be a party without a `User` account. The declaration write rule can therefore be specified (a party holding the relevant administrative authority — including a Guardian without an account — may write a safety-binding `Declaration`; writing one is not the right to design training). The subject-scoped regime is settled by DM-018; DM-017A affects only whether assignments extend to groups and sessions, and does not gate the declaration policy. *(`Declaration` is not in the Sprint 3 startup set; this unblocks a later sprint.)*
 
 ## 5.6 Tenancy bootstrap — the provisioning mechanism
 
@@ -551,13 +551,10 @@ The completion criterion S3 inherits is *"ownership boundaries enforced at the d
 
 # §10 · Open decisions
 
-Nine, none resolved here. The register is [`open-decisions.md`](../work/open-decisions.md).
+Five open, none resolved here. The register is [`open-decisions.md`](../work/open-decisions.md). *(DM-013, DM-014, DM-015 were resolved 2026-08-05 by the Product Owner — recorded in `data-model.md`; their SDS references are updated in §2, §3, §4, §5.)*
 
 | # | Lands in |
 |---|---|
-| DM-013 · `Training` : `TrainingSession` cardinality | §2, §4 |
-| DM-014 · persistence of the authority model | §3, §4, §5 |
-| DM-015 · data class of knowledge and practice | §3, §4 |
 | DM-016 · `Plan` : `Objective` cardinality | §2, §4 |
 | DM-017A · whether an `Assignment` also targets a group or session | §2, §4, §5 |
 | DM-019 · trigger and visibility of mass re-derivation | §6 |
@@ -568,4 +565,4 @@ Nine, none resolved here. The register is [`open-decisions.md`](../work/open-dec
 
 ---
 
-_This document is the contract between the approved architecture and the implementation. It inherits every document above it and may not contradict any of them. It changes by explicit Product Owner approval, and it cannot close before F2 is approved and G1 resolved._
+_This document is the contract between the approved architecture and the implementation. It inherits every document above it and may not contradict any of them. It changes by explicit Product Owner approval, and — with G1 resolved by ADR-0003 — it cannot close before F2 is approved._

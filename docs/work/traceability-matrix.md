@@ -68,16 +68,16 @@ Content and priority: `open-decisions.md`. This matrix adds only *where each bit
 
 | Decision | Where it bites in execution | Gates Sprint 3? |
 |---|---|---|
-| **DM-013** — `Training : TrainingSession` cardinality | `TrainingSession` structure (not in startup set) | **Yes — via F2 approval.** Data Model Part VII gates F2's approval on it; subsumed by S3.0 criterion 1 (`data-model.md`, `sprint-03-players.md` §7) |
-| **DM-014** — authority model beyond `Assignment` | `Declaration` write rule, guardian (not in startup set) | **Yes — via F2 approval.** Data Model Part VII; subsumed by S3.0 criterion 1 |
-| **DM-015** — data class of knowledge/practice | `LibraryConcept`, `Exercise` lifecycle | **Yes — via F2 approval.** Data Model Part VII; subsumed by S3.0 criterion 1 |
+| **DM-013** — `Training : TrainingSession` cardinality | `TrainingSession` structure (not in startup set) | **RESOLVED 2026-08-05 (1:1).** No longer gates; F2's Part VII prerequisite is cleared (`data-model.md`) |
+| **DM-014** — authority model beyond `Assignment` | `Declaration` write rule, guardian (not in startup set) | **RESOLVED 2026-08-05 (minimal).** No longer gates; F2's Part VII prerequisite is cleared |
+| **DM-015** — data class of knowledge/practice | `LibraryConcept`, `Exercise` lifecycle | **RESOLVED 2026-08-05 (outside four classes).** No longer gates; F2's Part VII prerequisite is cleared |
 | **DM-016** — `Plan : Objective` cardinality | Whether `Plan` is a root | No — S7 |
 | **DM-017A** — assignment targets a group/session | Additional `Assignment` target kinds | No — Sprint 3 assigns coach→player only |
 | **DM-019** — mass re-derivation trigger/visibility | `Analysis` / `IdentityMemory` update policy | No — S6+ |
 | **DM-020** — standard of verifiability | **Closure of S3.2 (policies) and S3.8 (isolation)** | **Yes — blocks *closure* only** (runbook P6.5) |
 | **DM-022** — derivation-reference granularity | Directed-forgetting execution on interpretations | No — no interpretation in startup set |
 
-> **Reading:** two kinds of open decision touch Sprint 3, both inherited from the owning documents. **DM-013/14/15 gate the S3.0 *start*** — Data Model Part VII conditions F2's approval on them, and S3.0 criterion 1 requires F2 approved (`data-model.md`, `sprint-03-players.md` §7). **DM-020 gates *closure*** of S3.2/S3.8, not authoring (runbook P6.5). The remaining decisions touch structures outside the startup set. This matrix reflects these positions; it does not decide them.
+> **Reading:** **DM-013/14/15 and G1 were resolved on 2026-08-05, and F2 (the Data Model) was approved the same day** — the Part VII prerequisites and G1 were its declared gates. **DM-020 gates *closure*** of S3.2/S3.8, not authoring (runbook P6.5). The remaining open decisions touch structures outside the startup set. This matrix reflects these positions; it does not decide them.
 
 ---
 
@@ -125,7 +125,7 @@ Cross-index so the sprint plan, the runbook and the validation stay aligned.
 
 | Story (`sprint-03-players.md`) | Runbook phase | Validation (runbook P6 / sprint §5) | Status |
 |---|---|---|---|
-| S3.0 Precondition gate | P1 (1.0) + P2 | Approvals recorded; legacy state known | BLOCKED — F2/G1/DBDS approvals; F2 carries the Part VII prerequisite (DM-013/14/15) |
+| S3.0 Precondition gate | P1 (1.0) + P2 | Approvals recorded; legacy state known | ✅ **READY (5/5)** — C1 F2, C2 G1, C3 DBDS Part II+IV, C4 legacy reconciled (archived), C5 bootstrap all met (2026-08-05). S3.1 not started |
 | S3.1 Migration — structures | P3.1–P3.7, P3.10 | P6.2 — applies to empty DB, nothing cascades | READY |
 | S3.2 Access policies | P3.8–P3.9 | P6.3 — default deny holds; **P6.5 close gated by DM-020** | READY to author · BLOCKED to close |
 | S3.3 Tenancy bootstrap | P4 | P6.3 — cold start end to end | READY |
@@ -140,7 +140,7 @@ Cross-index so the sprint plan, the runbook and the validation stay aligned.
 ## Summary of the current picture
 
 - **Every startup structure and roster story is `READY`** — all information for the schema and the build exists.
-- **The S3.0 *start* gate is blocked** by the F2/G1/DBDS approvals — and F2's approval carries the Data Model's Part VII prerequisite (DM-013/14/15 answered), per `data-model.md`. This is inherited, not a matrix decision.
+- **The S3.0 *start* gate is GREEN — all five criteria met on 2026-08-05.** F2 approved, G1 resolved (ADR-0003), DBDS Part II+IV C3-scoped-approved, C4 legacy reconciled (archived to `supabase/legacy/`), C5 bootstrap specified. Migration 0001 (S3.1) may begin; it has not been started. This is inherited, not a matrix decision.
 - **The *closure* gate is DM-020**, for S3.2/S3.8 only.
 - **No contradiction forces rework of Migration 0001**; every startup structure traces cleanly from the Intelligence Core (Matrix F).
 

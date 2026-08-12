@@ -615,9 +615,9 @@ All are empty. **The cost of renaming today is zero.**
 
 ## 11.2 Outstanding
 
-**Memory governance — still owed.** `memory-model.md` Open Question 1 and ADR-0001 both record that *what may be remembered, for how long, and under whose consent* is undecided and belongs to Governance. This matters especially because Atlas holds data on developing athletes, including minors.
+**Memory governance — RESOLVED.** `memory-model.md` Open Question 1 and ADR-0001 both recorded that *what may be remembered, for how long, and under whose consent* was undecided and belonged to Governance. It is now decided: [`memory-governance.md`](../constitution/memory-governance.md), accepted by [`ADR-0003`](../decisions/ADR-0003-memory-governance.md) (2026-08-05), which closed `memory-model.md` Open Question 1. This mattered especially because Atlas holds data on developing athletes, including minors.
 
-**Does not block Sprint 2**, which persists no player data. It blocks the first feature that does.
+**Did not block Sprint 2**, which persists no player data. It gated the first feature that does; that gate (G1) is now cleared.
 
 **Note on document placement.** Per ADR-0001 Future Evolution this artifact is the **Domain Model** phase; it resides in `01 Vision/` by explicit instruction. Separately, `docs/` contains both `03 Architecture/` and `04 Architecture/` with duplicate `tech-stack.md` files — a governance defect worth resolving independently.
 

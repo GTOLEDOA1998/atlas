@@ -1,6 +1,6 @@
 # Open Architectural Decisions
 
-> **Status:** Active register. Eight decisions are open.
+> **Status:** Active register. Five decisions are open.
 > **Owns:** the state of every architectural decision between the moment it is raised and the moment it is resolved — its identifier, what it blocks, and who owns it.
 > **Inherits:** [`ADR-0001`](../decisions/ADR-0001-intelligence-core-frozen.md) for what requires an ADR · [`ADR-0002`](../decisions/ADR-0002-documentation-governance.md) for which document owns which decision.
 > **Does not own:** the content of any decision — that belongs to the document that owns it · resolved decisions, which are recorded in the document they changed · anything requiring an ADR once it is answered.
@@ -21,15 +21,14 @@ Seven decisions gate the Software Design Specification and existed only in conve
 
 **DM-018 is resolved** and absent, and it **absorbed the former DM-017B**. The athlete is two structures: `Player` the person (crosses clubs, subject of Player Identity Memory) and `RosterMembership` the person within one club (the tenancy anchor, hosting `Assignment`) — mirroring `User` + `Membership`. A club transfer opens a new membership and never mints a new person, so identity follows the athlete. Recorded in the Amendment lines of [`product-architecture.md`](../architecture/product-architecture.md), [`data-model.md`](../architecture/data-model.md) and [`sds.md`](../architecture/sds.md). **DM-017A** — whether an assignment also targets a group or session — is what remains, renumbered from the former DM-017.
 
+**DM-013, DM-014 and DM-015 are resolved** (Product Owner, 2026-08-05) and therefore absent from the table above. They were the three "raised, not taken" decisions of [`data-model.md`](../architecture/data-model.md) Part VII. **DM-013** — `Training : TrainingSession` = 1:1 (one design, one occasion). **DM-014** — the *minimal* authority model is persisted: a `Declaration` records its declarer and the authority under which it was made, and the declarer may be a party without a `User` account; a full `Guardian`/`Delegation`/administrative-authority model is out of scope. **DM-015** — `LibraryConcept` and `Exercise` are declared a curated knowledge/practice family *outside* the four data classes, keeping their existing ownership and versioning. Recorded in the Amendment line and Part VI/Part VII of [`data-model.md`](../architecture/data-model.md), and reflected in [`dbds.md`](../architecture/dbds.md) and [`sds.md`](../architecture/sds.md). **None required an ADR** (all are Data Model / Tier 2 decisions; the Intelligence Core is not amended). They cleared the Part VII prerequisite of F2 approval. With **G1 also resolved** (by [`ADR-0003`](../decisions/ADR-0003-memory-governance.md), 2026-08-05), **F2's only remaining gate is the explicit Product Owner approval act** — F2 itself remains unapproved.
+
 ---
 
 ## The register
 
 | ID | State | Decision | Owning document | Blocks | Priority |
 |---|---|---|---|---|---|
-| **DM-013** | Open | Does one `Training` design serve one occasion or many? | [`data-model.md`](../architecture/data-model.md) §2.19 | Closing the Aggregate Map — whether `TrainingSession` is a root. If a design serves many occasions, one modification record cannot hold them | **High** |
-| **DM-014** | Open | Does the model persist the authority model beyond `Assignment` — Guardian, Club as authority, Delegation, temporary-coach scope? | [`data-model.md`](../architecture/data-model.md) §1.2, §2.9 | The atomic write of a `Declaration`; representing the guardian/coach conflict the Core resolves. Safety-relevant | **High** |
-| **DM-015** | Open | What data class do `LibraryConcept` and `Exercise` belong to? Neither fits the four | [`data-model.md`](../architecture/data-model.md) §1.1 | The coherence of the rule that every record belongs to exactly one class | Medium |
 | **DM-016** | Open | Is `Plan : Objective` 1:N or N:M? §2.4 states both in one sentence | [`product-architecture.md`](../architecture/product-architecture.md) §2.4 · [`data-model.md`](../architecture/data-model.md) §2.18 | Closing the Aggregate Map — whether `Plan` is a root or lives inside `Objective` | **High** |
 | **DM-017A** | Open | May an `Assignment` also target a `Group` or a `Session`, not only a player-in-club? | [`data-model.md`](../architecture/data-model.md) §2.5 | Additional assignment target kinds. With DM-010 approved, a group objective currently has nobody with authority to accept it. Where a player assignment lives is settled by DM-018 | Medium |
 | **DM-019** | Open | Who triggers mass re-derivation when perception improves, and is it visible to the coach? | [`product-architecture.md`](../architecture/product-architecture.md) §1.1, §1.4 | The update policy of `Analysis` and `IdentityMemory`. C2 requires re-derivation; §1.4 forbids silently applied change | Medium |
@@ -40,11 +39,11 @@ Seven decisions gate the Software Design Specification and existed only in conve
 
 **DM-026 and DM-027 were withdrawn from this register**, not resolved. A classification audit found neither is an architectural decision — neither changes an entity, relationship, ownership rule, invariant, authority, lifecycle or model rule. Their domain content was already settled ([`product-architecture.md`](../architecture/product-architecture.md) §7.3, [`memory-governance.md`](../constitution/memory-governance.md) §2.2) or already owned elsewhere (the persistence of the Recording Authority assertion is DM-025, `data-model.md`). **DM-026** (the provisioning *mechanism*) is owned by [`sds.md`](../architecture/sds.md) §5.6, where it is now specified. **DM-027** (the display-name source) is an implementation/UX note, now owned by the Sprint 3 work document. Both remain traceable from [`sprints/sprint-03-players.md`](sprints/sprint-03-players.md) as implementation dependencies.
 
-**Four of eight are High.** Reported rather than spread out for appearance: DM-014 fixes a safety-relevant policy, DM-016 moves an Aggregate Map boundary, DM-020 gates the whole of SDS §9, and DM-022 fixes how directed forgetting is computed.
+**Two of five are High.** DM-016 moves an Aggregate Map boundary, and DM-020 gates the whole of SDS §9. *(DM-014, previously High and safety-relevant, is now resolved.)*
 
 **DM-020 replaces an earlier formulation** that asked whether Atlas should adopt a test framework. That was the wrong question: the framework is a consequence of the standard, not the decision. What must be settled is the **standard of proof** a piece of work meets before it is called done — which today is *"builds and runs"*, and which cannot demonstrate that a coach in one club cannot read a player in another.
 
-**DM-014 and DM-017A both concern the authority model's reach into persistence** — the declarer of a fact, and the targets an assignment may take. They are usefully decided together, though DM-018 has now settled the load-bearing half (where a player assignment lives).
+**DM-017A concerns the authority model's reach into persistence** — the targets an assignment may take. Its companion DM-014 (the declarer of a fact) is now resolved at minimal scope; DM-018 already settled the load-bearing half (where a player assignment lives). DM-017A remains open.
 
 **None requires an ADR** as currently framed. All are Tier 2 amendments or Data Model decisions. The Intelligence Core is not amended by any of them.
 

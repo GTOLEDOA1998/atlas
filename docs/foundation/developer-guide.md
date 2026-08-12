@@ -129,9 +129,10 @@ Implementation makes **no** architectural decisions. If you reach a point where 
 | If you are building… | Watch for | Effect |
 |---|---|---|
 | Access-control verification | **DM-020** — the standard of proof for isolation | Gates *closure* of the policy work, not authoring |
-| `Declaration`, guardian, delegation | **DM-014** | Out of the startup set; not needed for the roster |
-| `Training` / `TrainingSession` / `Plan` | **DM-013 · DM-016** | Aggregate boundaries unresolved |
-| `LibraryConcept` / `Exercise` | **DM-015** | Data class undecided |
+| `Declaration`, guardian, delegation | **DM-014** — *resolved 2026-08-05 (minimal)* | Declarer + authority persisted; declarer may lack an account. Full Guardian/Delegation model still out of scope |
+| `Training` / `TrainingSession` | **DM-013** — *resolved 2026-08-05* | `Training : TrainingSession` = 1:1 |
+| `Plan` | **DM-016** | Aggregate boundary unresolved |
+| `LibraryConcept` / `Exercise` | **DM-015** — *resolved 2026-08-05* | A curated family outside the four data classes; ownership/versioning unchanged |
 | Re-derivation across the corpus | **DM-019** | Trigger + visibility unresolved |
 | Any interpretation's derivation links | **DM-022** | Granularity undecided |
 

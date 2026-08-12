@@ -72,7 +72,7 @@ Three are load-bearing for work already underway:
 
 - **The promotion threshold** from context to identity — appears unresolved in three documents at once
 - **The decay rate** of stale memory — differs by subject and is unspecified
-- **Memory governance** — what may be remembered, for how long, under whose consent. Deliberately excluded from the Core and **still owed to Governance**. It currently blocks the first feature that persists player data.
+- **Memory governance** — what may be remembered, for how long, under whose consent. Deliberately excluded from the Core and owed to Governance. **RESOLVED (2026-08-05)** by [`memory-governance.md`](../memory-governance.md), accepted via [`ADR-0003`](../../decisions/ADR-0003-memory-governance.md), which closed this document's Open Question 1. *(Status annotation only; no structural content of the Core changed.)*
 
 ---
 

@@ -1,6 +1,6 @@
 # Sprint 3 — Players · Implementation Plan
 
-> **Status:** Prepared, not started. **Blocked** until F2, G1 and F3 are approved (§3.0).
+> **Status:** Prepared. **S3.0 gate is GREEN — all five entry criteria met (2026-08-05).** Migration 0001 (S3.1) **not started**; starting it is a separate act.
 > **Tier:** 4 — Work. It plans execution; it decides nothing about the domain.
 > **Owns:** what Sprint 3 implements, in what order, with what dependencies, and how each piece is known to be done.
 > **Inherits, and never restates:** [`roadmap.md`](../roadmap.md) S3 · [`product-architecture.md`](../../architecture/product-architecture.md) · [`data-model.md`](../../architecture/data-model.md) · [`sds.md`](../../architecture/sds.md) · [`dbds.md`](../../architecture/dbds.md) · [`memory-governance.md`](../../constitution/memory-governance.md) · [`development-rules.md`](../../constitution/development-rules.md).
@@ -41,7 +41,7 @@ Derived from [`roadmap.md`](../roadmap.md) S3 and [`product-architecture.md`](..
 | Videos, analyses, priorities, objectives, training | Later sprints (S4–S8). The profile tabs for them ship as empty states (F), never as invented data — `product-architecture.md` §1.5 |
 | The progress / evolution tab's data | Depends on measurements that do not exist until S6 — `roadmap.md` S3 risk |
 | Club management UI, groups, invitations | v1.1 — `product-architecture.md` §9.2. Sprint 3 ships the club *boundary*, not its interface |
-| `Declaration`, guardian roles, delegation | Blocked by DM-014, and not needed for a roster. Not in the startup set |
+| `Declaration`, guardian roles, delegation | Out of scope (S4+); not needed for a roster and not in the startup set. *(DM-014 is resolved at minimal scope, but `Declaration` is still built in a later sprint.)* |
 | An assignment targeting a group or session | DM-017A, open. Sprint 3 assigns a coach to a player only |
 | Any change to the shipped authentication flow | `development-rules.md` §2 forbids touching Sprint 1 out of scope — see the display-name note (§6) |
 
@@ -83,9 +83,18 @@ Format is identical for each. **Owning documents** are where the rules live; thi
 | **Purpose** | Confirm the sprint may start at all. It is a gate, not a build. |
 | **Owning documents** | `roadmap.md` (F2, G1, F3 states) · `sds.md` §4.8 |
 | **Preconditions** | — |
-| **Artifacts at completion** | A recorded confirmation that F2 is approved, memory governance is approved (G1), and the SDS is approved; and that the applied state of `supabase/migrations/0001_atlas_core.sql` has been established |
-| **Acceptance criteria** | F2, G1, F3 all approved · the legacy migration's applied state is known and a reconciliation path is chosen (it is declared superseded by `sds.md` §4.8) |
-| **Definition of Done** | The three approvals exist and the legacy migration is accounted for. **If any approval is missing, Sprint 3 does not start.** |
+| **Artifacts at completion** | ✅ Recorded: F2 approved, G1 resolved (ADR-0003), DBDS Part II+IV C3-scoped-approved; and the applied state of the legacy migration established and reconciled (see the reconciliation record below) |
+| **Acceptance criteria** | ✅ **Met.** F2, G1 and the DBDS startup structures approved · the legacy migration's applied state is **known (not applied — 0 tables in `public`)**, a reconciliation path was **chosen and executed** (archived), and it is superseded per `sds.md` §4.8 |
+| **Definition of Done** | ✅ **Met.** The approvals exist and the legacy migration is accounted for and reconciled. S3.0 may start Sprint 3. |
+
+> **Legacy reconciliation record (C4) — 2026-08-05.** Product Owner authorised the reconciliation, choosing **archive, not delete**.
+> - **Artifact:** `0001_atlas_core.sql` (six legacy tables: `profiles`, `players`, `videos`, `analyses`, `observations`, `recommendations`; six indexes; `pgcrypto`; no RLS/triggers/functions/grants/seed).
+> - **Moved:** from `supabase/migrations/0001_atlas_core.sql` → **`supabase/legacy/0001_atlas_core.sql`** (content byte-identical, unedited), so no migration tool treats it as pending.
+> - **Supabase state (directly verified):** `public` has **0 tables**; none of the six legacy tables exists (`information_schema.tables`); **no applied migration history** (Dashboard → Migrations); Supabase CLI not installed; `db push` never run.
+> - **Data:** none to preserve — the tables do not exist and never held logic or seed; the app references none of them.
+> - **Not applied to the current project.** The migration is declared **superseded in full** by `sds.md` §4.8.
+> - **No SQL executed; Supabase not modified;** no `db push`/`db reset`/`repair`, no `DROP`/`DELETE`/`ALTER`.
+> - **The new Migration 0001 will be created later as part of S3.1 — not now.**
 
 ### S3.1 · Migration 0001 — the startup schema
 
@@ -203,7 +212,7 @@ Only those that touch Sprint 3 — whether by gating a §7 criterion or by block
 | Decision | Effect on Sprint 3 | Severity |
 |---|---|---|
 | **DM-020** — required level of verifiability | **S3.2 and S3.8 have no completion criterion until it resolves.** The sprint can build the policies but cannot *close* on "enforced at the data layer" without a decided verification standard | **Blocking for closure** |
-| **DM-013 · DM-014 · DM-015** — the Data Model's Part VII | **Subsumed by §7 criterion 1.** [`data-model.md`](../../architecture/data-model.md) gates F2's approval on these, so criterion 1 (F2 approved) cannot hold until they are answered. They do not touch the seven startup structures — their effect on the sprint is the F2 gate, not the schema. **Inherited from the Data Model, not decided here** | Gate F2 approval |
+| **DM-013 · DM-014 · DM-015** — the Data Model's Part VII | **RESOLVED 2026-08-05** (Product Owner; recorded in [`data-model.md`](../../architecture/data-model.md)). They cleared F2's Part VII prerequisite, and **F2 was approved the same day**. They never touched the seven startup structures | Resolved — no longer gating |
 | **DM-016 · DM-017A · DM-019 · DM-022** — outside the startup set | Touch structures the startup set does not include; not in the Data Model's Part VII, and the scoped DBDS approval (§7 criterion 3: Part II + Part IV) carries no blocker for them. Sprint 3 assigns a coach to a player only, so DM-017A adds no target. They gate none of §7's criteria | None (on the gate) |
 
 **Two implementation dependencies, not architectural decisions.** A classification audit withdrew both from the open-decisions register as non-domain (they change no entity, relationship, ownership, invariant, authority, lifecycle or model rule):
@@ -219,13 +228,15 @@ Only those that touch Sprint 3 — whether by gating a §7 criterion or by block
 
 Migration 0001 is S3.1. It may begin only when **all** of the following hold:
 
-1. **F2 approved** — the Data Model is no longer Candidate.
-2. **G1 approved** — [`memory-governance.md`](../../constitution/memory-governance.md) is accepted, recorded as an ADR per its completion criterion.
-3. **The DBDS startup structures are approved** — at least Part II for the seven structures and Part IV for their access model.
-4. **The legacy migration is reconciled** — `0001_atlas_core.sql`'s applied state is known and it is superseded per `sds.md` §4.8.
+1. **F2 approved** — ✅ **met.** The Data Model is *Approved* (Product Owner, 2026-08-05; recorded in [`data-model.md`](../../architecture/data-model.md)).
+2. **G1 approved** — ✅ **met.** [`memory-governance.md`](../../constitution/memory-governance.md) accepted and recorded as an ADR ([`ADR-0003`](../../decisions/ADR-0003-memory-governance.md), 2026-08-05).
+3. **The DBDS startup structures are approved** — ✅ **met.** Part II (the seven structures) + Part IV (access model) C3-scoped-approved (Product Owner, 2026-08-05; recorded in [`dbds.md`](../../architecture/dbds.md)). DM-017A's Group/Session extension is deferred; full DBDS closure is not part of this.
+4. **The legacy migration is reconciled** — ✅ **met.** `0001_atlas_core.sql`'s applied state is known (**not applied — 0 tables**), it is superseded per `sds.md` §4.8, and it was archived to `supabase/legacy/` on 2026-08-05 (see the reconciliation record in the S3.0 story). No SQL was run and Supabase was not modified.
 5. **The tenancy-bootstrap provisioning mechanism is specified** in [`sds.md`](../../architecture/sds.md) §5.6 — ✅ **met.** The `User` structure's provisioning is now fixed (trigger, order, atomicity, failure, and the runtime / migration / Sprint 3 split). (The display-name source is an S3.3 implementation note, §6, and does not gate the migration.)
 
-**The open decisions add no criterion beyond the five above.** DM-013, DM-014 and DM-015 are already inside criterion 1: [`data-model.md`](../../architecture/data-model.md) gates F2's approval on them, so criterion 1 (F2 approved) cannot hold until they are answered. DM-016, DM-017A, DM-019 and DM-022 touch structures outside the startup set and the scoped DBDS approval, so they gate none of criteria 1–5. This plan inherits these positions from the owning documents; it does not decide them.
+**All five criteria now hold — the S3.0 gate is GREEN (5/5) as of 2026-08-05. Migration 0001 (S3.1) may begin; it has not been started here.**
+
+**The open decisions add no criterion beyond the five above.** DM-013, DM-014 and DM-015 were **resolved on 2026-08-05**, and F2 was **approved the same day** (recorded in [`data-model.md`](../../architecture/data-model.md)) — criterion 1 is met. DM-016, DM-017A, DM-019 and DM-022 touch structures outside the startup set and the scoped DBDS approval, so they gate none of criteria 1–5 and remain Open. This plan inherits these positions from the owning documents; it does not decide them.
 
 ---
 

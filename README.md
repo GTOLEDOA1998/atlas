@@ -55,6 +55,7 @@ Significant architectural decisions are recorded as ADRs in [`docs/decisions/`](
 
 - [`ADR-0001`](docs/decisions/ADR-0001-intelligence-core-frozen.md) — Atlas Intelligence Core Version 1.0 frozen. The Intelligence Core is architecturally complete; future work inherits it, and changes require a new ADR.
 - [`ADR-0002`](docs/decisions/ADR-0002-documentation-governance.md) — Documentation governance and structure. Documentation is organised by how a document changes; four tiers determine who may change what.
+- [`ADR-0003`](docs/decisions/ADR-0003-memory-governance.md) — Memory governance accepted. Adopts `memory-governance.md` as the governing Tier 1 policy and closes `memory-model.md` Open Question 1. Resolves G1; approves nothing beyond it.
 
 ---
 

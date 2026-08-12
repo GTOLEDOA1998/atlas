@@ -1,10 +1,12 @@
 # Atlas Data Model
 
-> **Status:** Redesigned against the approved architectural decisions DM-001 … DM-012, and further amended by DM-018 and DM-023. **Not approved.** Approval remains gated on the open decisions in Part VII.
+> **Status:** ✅ **Approved** (F2) — 2026-08-05, by explicit Product Owner decision, on the basis of the F2 Final Audit (*F2 READY: YES*). Its declared prerequisites are met: **G1 resolved** ([`ADR-0003`](../decisions/ADR-0003-memory-governance.md)) and the Part VII decisions **DM-013 · DM-014 · DM-015 resolved**. The open decisions DM-016 · DM-017A · DM-019 · DM-020 · DM-022 are **deliberately deferred** and do not gate F2; they remain Open. This is the contractual Data Model base for subsequent development. **Approving F2 approves neither the DBDS, the legacy-migration reconciliation, the Sprint 3 gate (S3.0), nor any implementation.**
 > **Amended 2026-08-04** by **DM-023** (`Profile` withdrawn; `User` carries its holder's identity, §2.3) and **DM-018** (the athlete is `Player` the person plus `RosterMembership` the club relationship; identity follows the person; §1.5, §2.4, §2.5, Part III). DM-017B was absorbed by DM-018; DM-017A remains open. Further amended by **DM-025** (`RecordingAssertion` · §2.4b — the Recording Authority assertion persisted as a dedicated Decision, one per `(subject, club)`, also its own L4 tombstone).
+> **Amended 2026-08-05**, by explicit Product Owner decision, resolving the three Part VII decisions: **DM-013** — `Training : TrainingSession` is **1:1**; one `Training` designs exactly one occasion, so the coach's modification has an unambiguous home (§2.19, §2.8). **DM-014** — the **minimal** authority model is persisted: a `Declaration` records its **declarer** and the **authority** under which it was made, and the declarer may be a party **without a `User` account**; a full `Guardian` / `Delegation` / administrative-authority model remains **out of scope** (§1.2, §2.9). **DM-015** — `LibraryConcept` and `Exercise` are a **curated knowledge/practice family outside the four data classes**, retaining their existing ownership and versioning (§1.1, §2.20, §2.21). No other content was changed.
+> **Approved 2026-08-05 (F2).** The Product Owner formally approved this document as the contractual Data Model, moving it from *Candidate* to *Approved*. Approval rests on the F2 Final Audit (*F2 READY: YES*) and on the met prerequisites (G1 via ADR-0003; DM-013/14/15 resolved). No architectural content was changed by the approval; the deferral of DM-016 · DM-017A · DM-019 · DM-020 · DM-022 was accepted, and those decisions remain Open.
 > **Owns:** what Atlas persists · the four data classes and their lifecycles · entity responsibilities, ownership, permanence, regenerability and versioning · the subject invariant · the global never-persist list.
 > **Inherits:** the Intelligence Core — chiefly [`memory-model.md`](../constitution/intelligence-core/memory-model.md), [`current-session.md`](../constitution/intelligence-core/current-session.md), [`training-model.md`](../constitution/intelligence-core/training-model.md), [`priority-engine.md`](../constitution/intelligence-core/priority-engine.md), [`human-decision-authority.md`](../constitution/intelligence-core/human-decision-authority.md), [`coaching-dna.md`](../constitution/intelligence-core/coaching-dna.md) — and [`product-architecture.md`](product-architecture.md).
-> **Does not own:** how Atlas reasons (Intelligence Core) · SQL schema, indexes, access policies, migrations (SDS phase) · interface language (`product-architecture.md` Part VIII) · what *may* be remembered under whose consent (Governance — still owed).
+> **Does not own:** how Atlas reasons (Intelligence Core) · SQL schema, indexes, access policies, migrations (SDS phase) · interface language (`product-architecture.md` Part VIII) · what *may* be remembered under whose consent (Governance — [`memory-governance.md`](../constitution/memory-governance.md), resolved by ADR-0003).
 > **Precedence:** the Intelligence Core governs, then the Product Constitution, then `product-architecture.md`. Where this document appears to conflict with any of them, this document is defective.
 > **Amendment:** deliberate and explicit. Changes touching the Intelligence Core require an ADR.
 > **Phase:** Data Model — step 2 of the sequence set by [`ADR-0001`](../decisions/ADR-0001-intelligence-core-frozen.md).
@@ -30,7 +32,7 @@ Whether a record is permanent, regenerable or versioned is answered systematical
 
 **On Context.** The class is bounded by *the lifetime of what it describes*, not by the occasion on which it was stated ([`current-session.md`](../constitution/intelligence-core/current-session.md) §4). Some context expires with its session; some outlives it and expires only by human action. Both are Context; they differ in lifetime, not in kind.
 
-**One family of records does not fit these four classes** — curated and tenant-authored knowledge (§2.13). This is recorded as an open decision, not resolved (Part VII, DM-015).
+**One family of records does not fit these four classes** — curated and tenant-authored knowledge (§2.20, §2.21). By **DM-015 (resolved)** this family is **declared outside the four-class system**: curated knowledge/practice with its own lifecycle rules (curated · versioned · retired-never-deleted), retaining provenance where it applies, evidence links, ownership and versioning. It is not memory about the player and is not forced into Fact/Interpretation/Decision/Context (Part VII).
 
 ## 1.2 Mandatory provenance
 
@@ -38,7 +40,7 @@ Every memory retains its source class permanently: `observed` (video) · `declar
 
 **Every interpretation must record what it was derived from.** This is not optional metadata — it is what makes directed forgetting possible. If you cannot identify which interpretations rested on a deleted fact, you cannot re-derive them, and the model lies silently.
 
-**A `declared` record must also record who declared it.** [`human-decision-authority.md`](../constitution/intelligence-core/human-decision-authority.md) §9 resolves who *decides* when two people disagree; the model cannot even represent that disagreement without the declarer. **Which parties may declare is an open decision** (Part VII, DM-014).
+**A `declared` record must also record who declared it.** [`human-decision-authority.md`](../constitution/intelligence-core/human-decision-authority.md) §9 resolves who *decides* when two people disagree; the model cannot even represent that disagreement without the declarer. **By DM-014 (resolved)** a declaration persists its **declarer** and the **authority** under which it was made; the declarer may be a party **without a `User` account** (e.g., a Guardian reporting by telephone), recorded minimally — a full `Guardian`/`Delegation`/administrative-authority model is out of scope (§2.9, Part VII).
 
 ## 1.3 Tenancy
 
@@ -164,7 +166,7 @@ The persisted form of the Recording Authority's assertion, required before any m
 
 **Resolvability, not per-record columns.** [`memory-governance.md`](../constitution/memory-governance.md) §3 requires every stored memory to carry its Recording Authority. Unlike source class and subject — which vary per record — the assertion is **invariant across all records about one subject within one club**, so "carries" is satisfied by resolving `(subject, club) → RecordingAssertion`. It is neither embedded in the subject's structures nor duplicated per record. *(Whether to denormalise a reference for query performance is a physical concern, not this decision.)*
 
-**Never persist** — the Guardian's separate identity where the asserter acts for a minor; the acting `User` (a club member) is recorded, and the Guardian is [DM-014](../work/open-decisions.md), out of the startup set.
+**Never persist** — the Guardian's separate identity where the asserter acts for a minor; the acting `User` (a club member) is recorded. *(The declarer-side Guardian question is resolved by DM-014 for `Declaration` at minimal scope; it does not change `RecordingAssertion`, and neither is in the startup set.)*
 
 ### 2.5 `Assignment` · *Decision* — who coaches whom
 
@@ -220,7 +222,7 @@ The unit is **the declaration, not the occasion.** Its lifetime is the lifetime 
 |---|---|
 | **Subject** | A `Player`, or a `Group` where the statement concerns the group's conditions |
 | **Occasion** | `0:1 TrainingSession`. **A declaration may exist without one** — a guardian reporting an injury by telephone binds training immediately |
-| **Declarer** | Recorded permanently, with the authority under which it was made (§1.2, DM-014) |
+| **Declarer** | Recorded permanently, with the authority under which it was made (§1.2). **By DM-014 (resolved)**: the declarer and its authority are persisted; the declarer may be a party **without a `User` account**, recorded minimally. A full `Guardian`/`Delegation`/administrative-authority model is out of scope |
 
 > **The safety asymmetry.** Atlas never assumes an injury has healed, a restriction has lifted, or an illness has passed. **Absence is unknown, never safe** — a query returning nothing means *not stated*, never *not so*.
 
@@ -339,7 +341,7 @@ The sequenced route serving one or more objectives. **Progress indicators and a 
 |---|---|
 | **Responsibility** | What Atlas proposed **and** what the coach did with it |
 | **Lifecycle** | Proposed by Atlas → accepted / modified / rejected → executed → evaluated |
-| **Relations** | `N:1 Plan` · `1:N Exercise` · `1:N TrainingSession` — **cardinality unresolved, see Part VII, DM-013** |
+| **Relations** | `N:1 Plan` · `1:N Exercise` · **`1:1 TrainingSession`** — **resolved by DM-013: one `Training` designs exactly one occasion.** A design is not reused across occasions; the coach's modification therefore has one unambiguous home (§2.8) |
 | **Permanent** | The original proposal and the modification, separately |
 
 > **Retaining the original proposal alongside the modified version is not auditing — it is learning.** A coach's modification is the plan working as intended, and it is the only signal from which Coach DNA is formed. Storing only the final result destroys it.
@@ -350,7 +352,7 @@ The concrete practice: a drill, a routine, a feed. **Owned by the club or the co
 
 > Atlas supplies objectives, reasoning, sequencing and constraints; **the coach supplies the exercises.** A model that dictated exercises would replace the coach's expertise rather than amplify it. This is a permanent limitation of the product, accepted deliberately.
 
-Class pending (Part VII, DM-015).
+**By DM-015 (resolved):** outside the four data classes — curated/authored practice, tenant-owned, versioned (§1.1, Part VII).
 
 ## Knowledge, conversation, and the assistant
 
@@ -366,7 +368,7 @@ Class pending (Part VII, DM-015).
 
 **Owned by Atlas, not by any tenant.** The ten knowledge domains are deliberately not modelled: the Core calls them *"a convenience for organising concepts"*.
 
-Class pending (Part VII, DM-015).
+**By DM-015 (resolved):** outside the four data classes — curated knowledge, Atlas-owned, versioned (§1.1, Part VII).
 
 ### 2.22 `Conversation` + `Message` + `ContextReference` · *Fact*
 
@@ -443,7 +445,7 @@ Grouped by data class, because the class determines the lifecycle.
 ║                                          1:N── Exercise         ║
 ╚═════════════════════════════════════════════════════════════════╝
 
-╔═══ KNOWLEDGE · class pending (DM-015) ═════════════════════════╗
+╔═══ KNOWLEDGE · outside the four classes (DM-015 resolved) ══════╗
 ║   LibraryConcept ◀──N:M──▶ LibraryConcept   (Atlas-owned)       ║
 ║   Exercise                                  (tenant-owned)      ║
 ╚═════════════════════════════════════════════════════════════════╝
@@ -474,7 +476,7 @@ Grouped by data class, because the class determines the lifecycle.
 
 # Part V — What blocks approval
 
-**⚠️ Memory governance.** Five questions without which the first table must not be created:
+**Memory governance — RESOLVED.** Five questions without which the first table must not be created — all now answered by [`memory-governance.md`](../constitution/memory-governance.md), accepted by [`ADR-0003`](../decisions/ADR-0003-memory-governance.md) (2026-08-05):
 
 1. What may be remembered about **a minor**, and for how long?
 2. Who consents — player, guardian, club — and how is it recorded?
@@ -482,7 +484,7 @@ Grouped by data class, because the class determines the lifecycle.
 4. How much superseded-interpretation history is retained? *(Currently unbounded)*
 5. What exactly does directed forgetting mean: withdrawal from the subject, deletion of the fact, or both?
 
-The structure above is built to accommodate restrictive answers. **The decision is still owed** and belongs in Governance.
+The structure above is built to accommodate restrictive answers. **The decision has been made** — it lives in `memory-governance.md` and was accepted by ADR-0003; this section no longer blocks F2 approval.
 
 **Deliberately deferred, and recorded so it is not closed by accident.** Whether **Club DNA applies where no club exists** is an open question of the Intelligence Core ([`human-decision-authority.md`](../constitution/intelligence-core/human-decision-authority.md), Open Question 5). This model does not answer it, and is shaped so that either answer can be adopted without restructuring. Closing it requires an ADR.
 
@@ -508,6 +510,9 @@ The structure above is built to accommodate restrictive answers. **The decision 
 | **DM-018** | The athlete is the person (`Player`) plus the club relationship (`RosterMembership`); identity follows the person, history stays with the club | §1.5; §2.4 both structures; §2.5 `Assignment` lives in `RosterMembership`; §1.3 tenancy; Part III diagram |
 | **DM-023** | `Profile` withdrawn; `User` carries its holder's identity | §2.3 |
 | **DM-025** | The Recording Authority assertion is a dedicated `Decision` structure, one per `(subject, club)`, that is also its own L4 tombstone; `§3` "carries" satisfied by resolvability, not per-record columns | §2.4b `RecordingAssertion` |
+| **DM-013** | `Training : TrainingSession` = **1:1** — one design serves exactly one occasion; the coach's modification has one unambiguous home | §2.19 (relation), §2.8; Part VII |
+| **DM-014** | The **minimal** authority model is persisted — a `Declaration` records its declarer and the authority under which it was made; the declarer may be a party without a `User` account. A full `Guardian`/`Delegation`/administrative-authority model is out of scope | §1.2, §2.9; Part VII |
+| **DM-015** | `LibraryConcept` and `Exercise` are a curated knowledge/practice family **outside the four data classes**, keeping their existing ownership and versioning | §1.1, §2.20, §2.21; Part VII |
 
 ## DM-010 · the required demonstration of simplicity
 
@@ -527,21 +532,33 @@ The cost is real and lands elsewhere: queries and access policies over goals and
 
 ---
 
-# Part VII — Decisions raised by the redesign, not taken
+# Part VII — Decisions raised by the redesign · now RESOLVED
 
-Three questions were forced by writing the model and are not covered by DM-001 … DM-012. **They are not resolved here.**
+Three questions were forced by writing the model and are not covered by DM-001 … DM-012. They were raised here as *not taken*; on **2026-08-05** the Product Owner resolved all three. The original questions are preserved below (**OPEN → DECIDED → RESOLVED**), each followed by its resolution.
 
-### DM-013 · Does one `Training` serve one occasion or many?
+### DM-013 · Does one `Training` serve one occasion or many? — **RESOLVED**
 
-`Training` is the design; `TrainingSession` is the occasion. If one design serves several occasions, a coach who modifies it differently on two of them has two modifications and one place to record them — and the modification is the only signal from which Coach DNA is formed. If it serves exactly one, a reusable design has no home. Flagged as unresolved when DM-003 was proposed; §2.19 states the relation and marks it.
+*Question (as raised):* `Training` is the design; `TrainingSession` is the occasion. If one design serves several occasions, a coach who modifies it differently on two of them has two modifications and one place to record them — and the modification is the only signal from which Coach DNA is formed. If it serves exactly one, a reusable design has no home. Flagged as unresolved when DM-003 was proposed; §2.19 states the relation and marks it.
 
-### DM-014 · Does the model persist the authority model beyond `Assignment`?
+**Resolution (PO, 2026-08-05):** `Training : TrainingSession` = **1:1**. One `Training` designs exactly one occasion; a design is **not** reused across occasions, so the coach's modification has one unambiguous home. Consequence: no reuse mechanism for `Training` across sessions is designed. Reflected in §2.19 and §2.8.
 
-`Declaration` must record its declarer, and [`human-decision-authority.md`](../constitution/intelligence-core/human-decision-authority.md) §9 defines conflicts between a guardian and a coach. Today only `Assignment` is persisted: there is no `Guardian`, no `Club` as an authority, no `Delegation`, no temporary-coach scope. Without them the conflicts the Core resolves cannot be represented, and a guardian — who may hold no account — cannot be recorded as the source of a safety-binding statement.
+### DM-014 · Does the model persist the authority model beyond `Assignment`? — **RESOLVED (minimal scope)**
 
-### DM-015 · What class do `LibraryConcept` and `Exercise` belong to?
+*Question (as raised):* `Declaration` must record its declarer, and [`human-decision-authority.md`](../constitution/intelligence-core/human-decision-authority.md) §9 defines conflicts between a guardian and a coach. Today only `Assignment` is persisted: there is no `Guardian`, no `Club` as an authority, no `Delegation`, no temporary-coach scope. Without them the conflicts the Core resolves cannot be represented, and a guardian — who may hold no account — cannot be recorded as the source of a safety-binding statement.
 
-§1.1 requires every record to belong to exactly one of four classes. Curated knowledge and authored practice fit none: they did not happen, they are not concluded from evidence, they are not a choice about a player, and they are not true for a period. Either a fifth class exists, or this family is declared outside the four-class system. The gap predates this redesign; writing a class for every entity is what exposed it.
+**Resolution (PO, 2026-08-05):** persist the **minimum** required to represent declarations and the safety obligations the Constitution already establishes — and no more.
+
+- A `Declaration` persists its **declarer** and the **authority** under which it was made (the two authority domains of [`human-decision-authority.md`](../constitution/intelligence-core/human-decision-authority.md) §2).
+- The **declarer may be a party without a `User` account** — e.g., a Guardian reporting an injury by telephone. Such a party is recorded **minimally** (enough to attribute the declaration and its authority), so the provenance of a safety-relevant declaration is preservable.
+- **`Guardian` is a role/authority on the declaration, not a standalone entity at this stage.** A full `Guardian` entity, Guardian UI, a general `Delegation` system, a complete administrative-authority architecture, and temporary-coach scope are **explicitly out of scope** (v1.1 / future).
+
+This resolves who may be recorded as a declarer and under what authority (`§1.2`, `§2.9`); it does **not** build the authority-management system. It changes no entity in the Sprint 3 startup set (`Declaration` is a later sprint).
+
+### DM-015 · What class do `LibraryConcept` and `Exercise` belong to? — **RESOLVED**
+
+*Question (as raised):* §1.1 requires every record to belong to exactly one of four classes. Curated knowledge and authored practice fit none: they did not happen, they are not concluded from evidence, they are not a choice about a player, and they are not true for a period. Either a fifth class exists, or this family is declared outside the four-class system. The gap predates this redesign; writing a class for every entity is what exposed it.
+
+**Resolution (PO, 2026-08-05):** **declared outside the four-class system** — no fifth class is created. `LibraryConcept` and `Exercise` are a **curated knowledge/practice family** with their own lifecycle rules (curated · versioned · retired-never-deleted). They keep everything already decided: `LibraryConcept` remains **Atlas-owned**, `Exercise` remains **club/coach-owned** (DM-008), both remain **curated + versioned**, and provenance/evidence links (e.g., `Finding → LibraryConcept`) are unaffected. The four data classes continue to govern only the player record (Fact/Interpretation/Decision/Context); this family is a parallel, non-memory category. Reflected in §1.1, §2.20, §2.21.
 
 ---
 
@@ -557,4 +574,4 @@ Three questions were forced by writing the model and are not covered by DM-001 �
 
 ---
 
-_This document constitutes the Data Model phase sequenced by ADR-0001, redesigned against thirteen approved decisions. It inherits the Intelligence Core and may not contradict it. It awaits approval, which is gated on memory governance and on DM-013 … DM-015._
+_This document constitutes the Data Model phase sequenced by ADR-0001, redesigned against the approved decisions and, on 2026-08-05, the three Part VII decisions DM-013 · DM-014 · DM-015. It inherits the Intelligence Core and may not contradict it. With Part VII resolved and G1 accepted by ADR-0003, it was **approved by the Product Owner on 2026-08-05 (F2)** as the contractual Data Model._
