@@ -1,6 +1,6 @@
 # Sprint 3 — Players · Implementation Plan
 
-> **Status:** Prepared. **S3.0 gate is GREEN — all five entry criteria met (2026-08-05).** Migration 0001 (S3.1) **not started**; starting it is a separate act.
+> **Status:** In progress. **S3.0 gate GREEN (2026-08-05).** **S3.1 Migration 0001 applied + verified; S3.2 access policies CLOSED/DONE; S3.3 tenancy bootstrap DONE/VERIFIED (2026-08-16); S3.8 isolation demonstrated (36/36 PASS, data-layer, 2026-08-12).** Roster/profile stories S3.4–S3.7 not yet started.
 > **Tier:** 4 — Work. It plans execution; it decides nothing about the domain.
 > **Owns:** what Sprint 3 implements, in what order, with what dependencies, and how each piece is known to be done.
 > **Inherits, and never restates:** [`roadmap.md`](../roadmap.md) S3 · [`product-architecture.md`](../../architecture/product-architecture.md) · [`data-model.md`](../../architecture/data-model.md) · [`sds.md`](../../architecture/sds.md) · [`dbds.md`](../../architecture/dbds.md) · [`memory-governance.md`](../../constitution/memory-governance.md) · [`development-rules.md`](../../constitution/development-rules.md).
@@ -32,7 +32,7 @@ Derived from [`roadmap.md`](../roadmap.md) S3 and [`product-architecture.md`](..
 | E | Account ↔ person linking (optional `User` on a `Player`) | `product-architecture.md` §2.1 |
 | F | Player profile shell with tabs, each an honest empty state | `product-architecture.md` §8.3 · `ux-principles.md` U4 |
 | G | The header player switcher in S2's reserved context region | `product-architecture.md` §8.1 · sprint-02 R1 |
-| H | Isolation verification between clubs | `sds.md` §9.3 ⚠️ DM-020 |
+| H | Isolation verification between clubs | `sds.md` §9.3 · DM-020 (resolved) — ✅ demonstrated (S3.8 PASS) |
 
 ### Out, and why
 
@@ -116,7 +116,7 @@ Format is identical for each. **Owning documents** are where the rules live; thi
 | **Preconditions** | S3.1 |
 | **Artifacts at completion** | Row-level policies implementing default-deny and the `User → Membership → Club` chain; the subject-scoped rule for `Player` and `IdentityMemory`; the tenant-scoped rule for everything else |
 | **Acceptance criteria** | Default deny holds — a record with no authorising rule is unreachable · membership grants visibility, assignment grants authority, and the two are not conflated (`sds.md` §5.2) · a club reaches a person only through a `RosterMembership` it owns · no policy is enforced only in the UI |
-| **Definition of Done** | §7 met · every startup structure has an explicit policy · **its verification is S3.8** — and the *method* of verification is ⚠️ **DM-020**, which gates this story's completion |
+| **Definition of Done** | ✅ **DONE / CLOSED (2026-08-12).** §7 met · every startup structure has an explicit policy (15/15) · verified by **S3.8** to the **DM-020 (resolved)** standard — cross-club isolation demonstrated at the data layer (36/36 PASS) |
 
 ### S3.3 · Tenancy bootstrap
 
@@ -127,7 +127,7 @@ Format is identical for each. **Owning documents** are where the rules live; thi
 | **Preconditions** | S3.2 |
 | **Artifacts at completion** | The `features/club` slice: on a coach's first authenticated presence, a `Club` (kind: independent), an owner `Membership`, a `User` record, and the club's own `RecordingAssertion` exist |
 | **Acceptance criteria** | A coach with a valid session belongs to exactly one club and can therefore create their first player · the club asserts the Recording Authority under which future records exist (`memory-governance.md` §2.2) · no player can be created by a coach with no membership |
-| **Definition of Done** | §7 met · the cold start works end to end from a fresh account · **the provisioning mechanism is taken from the `sds.md` §5.6 specification, and the display-name source from the implementation note (§6) — neither is decided in this story** |
+| **Definition of Done** | ✅ **DONE / VERIFIED (2026-08-16).** §7 met (typecheck/lint/build green) · Migration 0002 + corrective 0003 applied · `provision_current_user_club()` verified — harness A–F **49/49 PASS** (idempotency, real concurrency, cross-tenant isolation, RLS, S3.8 regression), zero residue · **the cold start works end to end from a fresh account** (browser login → `(app)` layout → `ensureTenancyForCurrentUser()` → club-of-one), second entry idempotent, an existing user creates no second club, auth login/logout regression PASS, cross-tenant isolation demonstrated over authenticated HTTP/JWT/RLS · **the provisioning mechanism is taken from the `sds.md` §5.6 specification, and the display-name source from the implementation note (§6) — neither is decided in this story** |
 
 ### S3.4 · Roster
 
@@ -182,7 +182,7 @@ Format is identical for each. **Owning documents** are where the rules live; thi
 | **Preconditions** | S3.2 (spans S3.2–S3.7) |
 | **Artifacts at completion** | A demonstration that cross-club access is denied at the data layer |
 | **Acceptance criteria** | Two clubs, two coaches: neither reads nor writes the other's players, memberships or assignments · the demonstration exercises the data layer, not the UI (`sds.md` §9.3) |
-| **Definition of Done** | §7 met · **the required level of verifiability is ⚠️ DM-020**, which is open; until it resolves, this story has no completion criterion and the sprint cannot close on isolation |
+| **Definition of Done** | ✅ **PASS / VERIFIED (2026-08-12).** §7 met · the verifiability standard **DM-020 is resolved**; cross-club isolation demonstrated at the **data layer** — two clubs, two coaches, **36/36 PASS** (legit ops succeed; cross-tenant read/write, FK/PK mutation, indirect join, escalation, anon and DELETE all denied), single transaction with rollback (no persistent test data) |
 
 ---
 
@@ -199,7 +199,7 @@ What is verified at the end of each story. All derive from [`development-rules.m
 | S3.4–S3.5 | A player is created, found by search, opened, and optionally linked · person data and club data are on the correct structures |
 | S3.6 | Every profile tab resolves · no empty tab is unexplained · no tab fabricates data |
 | S3.7 | The switcher drives context from the reserved region · the header layout is unchanged in structure |
-| S3.8 | Cross-club isolation demonstrated at the data layer — **method pending DM-020** |
+| S3.8 | ✅ Cross-club isolation **demonstrated at the data layer (36/36 PASS, 2026-08-12)** — DM-020 standard applied |
 
 **The layer rule** (`sds.md` §9.2) is checkable statically throughout: `features/players` and `features/club` consume downward only and never import upward.
 
@@ -211,7 +211,7 @@ Only those that touch Sprint 3 — whether by gating a §7 criterion or by block
 
 | Decision | Effect on Sprint 3 | Severity |
 |---|---|---|
-| **DM-020** — required level of verifiability | **S3.2 and S3.8 have no completion criterion until it resolves.** The sprint can build the policies but cannot *close* on "enforced at the data layer" without a decided verification standard | **Blocking for closure** |
+| **DM-020** — required level of verifiability | **RESOLVED 2026-08-12.** The verifiability standard is set; S3.8 executed (36/36 PASS, data layer) and S3.2 closed on isolation. No longer blocking | Resolved — no longer gating |
 | **DM-013 · DM-014 · DM-015** — the Data Model's Part VII | **RESOLVED 2026-08-05** (Product Owner; recorded in [`data-model.md`](../../architecture/data-model.md)). They cleared F2's Part VII prerequisite, and **F2 was approved the same day**. They never touched the seven startup structures | Resolved — no longer gating |
 | **DM-016 · DM-017A · DM-019 · DM-022** — outside the startup set | Touch structures the startup set does not include; not in the Data Model's Part VII, and the scoped DBDS approval (§7 criterion 3: Part II + Part IV) carries no blocker for them. Sprint 3 assigns a coach to a player only, so DM-017A adds no target. They gate none of §7's criteria | None (on the gate) |
 
@@ -234,7 +234,7 @@ Migration 0001 is S3.1. It may begin only when **all** of the following hold:
 4. **The legacy migration is reconciled** — ✅ **met.** `0001_atlas_core.sql`'s applied state is known (**not applied — 0 tables**), it is superseded per `sds.md` §4.8, and it was archived to `supabase/legacy/` on 2026-08-05 (see the reconciliation record in the S3.0 story). No SQL was run and Supabase was not modified.
 5. **The tenancy-bootstrap provisioning mechanism is specified** in [`sds.md`](../../architecture/sds.md) §5.6 — ✅ **met.** The `User` structure's provisioning is now fixed (trigger, order, atomicity, failure, and the runtime / migration / Sprint 3 split). (The display-name source is an S3.3 implementation note, §6, and does not gate the migration.)
 
-**All five criteria now hold — the S3.0 gate is GREEN (5/5) as of 2026-08-05. Migration 0001 (S3.1) may begin; it has not been started here.**
+**All five criteria held — the S3.0 gate was GREEN (5/5) as of 2026-08-05, and Migration 0001 (S3.1) has since been applied and verified (2026-08-12). These are the entry criteria for beginning S3.1; they do not by themselves authorise starting S3.2/S3.3 or the roster/Players stories.**
 
 **The open decisions add no criterion beyond the five above.** DM-013, DM-014 and DM-015 were **resolved on 2026-08-05**, and F2 was **approved the same day** (recorded in [`data-model.md`](../../architecture/data-model.md)) — criterion 1 is met. DM-016, DM-017A, DM-019 and DM-022 touch structures outside the startup set and the scoped DBDS approval, so they gate none of criteria 1–5 and remain Open. This plan inherits these positions from the owning documents; it does not decide them.
 

@@ -43,7 +43,7 @@ Source: `dbds.md` Part II · `sds.md` §2 (roots) · runbook Phase 3.
 | `RosterMembership` | Fact | Part II `RosterMembership` | P3.5 | Tenant-scoped | `features/players` | READY |
 | `Assignment` | Decision | Part II `Assignment` | P3.6 | Tenant-scoped (training authority) | `features/players` | READY |
 | `RecordingAssertion` | Decision | Part II `RecordingAssertion` §2.4b | P3.7 | Tenant-scoped | `features/club` · `features/players` | READY |
-| *Default-deny + chain policies* | — | Part IV | P3.8–P3.9 | all four regimes | `features/club` · `features/players` | READY to author · BLOCKED to close (DM-020) |
+| *Default-deny + chain policies* | — | Part IV | P3.8–P3.9 | all four regimes | `features/club` · `features/players` | **DONE — authored + applied (0001); isolation demonstrated at the data layer (S3.8 PASS, 2026-08-12)** |
 
 ---
 
@@ -74,10 +74,10 @@ Content and priority: `open-decisions.md`. This matrix adds only *where each bit
 | **DM-016** — `Plan : Objective` cardinality | Whether `Plan` is a root | No — S7 |
 | **DM-017A** — assignment targets a group/session | Additional `Assignment` target kinds | No — Sprint 3 assigns coach→player only |
 | **DM-019** — mass re-derivation trigger/visibility | `Analysis` / `IdentityMemory` update policy | No — S6+ |
-| **DM-020** — standard of verifiability | **Closure of S3.2 (policies) and S3.8 (isolation)** | **Yes — blocks *closure* only** (runbook P6.5) |
+| **DM-020** — standard of verifiability | Closure of S3.2 (policies) and S3.8 (isolation) | **RESOLVED 2026-08-12.** Standard set (mechanical, data-layer, reproducible, PASS/FAIL, evidence, no persistent test data). **S3.8 executed — 36/36 PASS — and S3.2 closed on isolation (2026-08-12).** |
 | **DM-022** — derivation-reference granularity | Directed-forgetting execution on interpretations | No — no interpretation in startup set |
 
-> **Reading:** **DM-013/14/15 and G1 were resolved on 2026-08-05, and F2 (the Data Model) was approved the same day** — the Part VII prerequisites and G1 were its declared gates. **DM-020 gates *closure*** of S3.2/S3.8, not authoring (runbook P6.5). The remaining open decisions touch structures outside the startup set. This matrix reflects these positions; it does not decide them.
+> **Reading:** **DM-013/14/15 and G1 were resolved on 2026-08-05, and F2 (the Data Model) was approved the same day** — the Part VII prerequisites and G1 were its declared gates. **DM-020 is resolved (2026-08-12)** and S3.2's isolation closure is **complete**: the **S3.8 demonstration was executed — 36/36 PASS, data layer, rollback-clean (2026-08-12)**. The remaining open decisions (DM-016/017A/019/022) touch structures outside the startup set. This matrix reflects these positions; it does not decide them.
 
 ---
 
@@ -125,23 +125,23 @@ Cross-index so the sprint plan, the runbook and the validation stay aligned.
 
 | Story (`sprint-03-players.md`) | Runbook phase | Validation (runbook P6 / sprint §5) | Status |
 |---|---|---|---|
-| S3.0 Precondition gate | P1 (1.0) + P2 | Approvals recorded; legacy state known | ✅ **READY (5/5)** — C1 F2, C2 G1, C3 DBDS Part II+IV, C4 legacy reconciled (archived), C5 bootstrap all met (2026-08-05). S3.1 not started |
+| S3.0 Precondition gate | P1 (1.0) + P2 | Approvals recorded; legacy state known | ✅ **READY (5/5)** — C1 F2, C2 G1, C3 DBDS Part II+IV, C4 legacy reconciled (archived), C5 bootstrap all met (2026-08-05). S3.1 applied + verified |
 | S3.1 Migration — structures | P3.1–P3.7, P3.10 | P6.2 — applies to empty DB, nothing cascades | READY |
-| S3.2 Access policies | P3.8–P3.9 | P6.3 — default deny holds; **P6.5 close gated by DM-020** | READY to author · BLOCKED to close |
-| S3.3 Tenancy bootstrap | P4 | P6.3 — cold start end to end | READY |
+| S3.2 Access policies | P3.8–P3.9 | P6.3 — default deny holds; **P6.5 isolation demonstrated (S3.8 PASS)** | **DONE** |
+| S3.3 Tenancy bootstrap | P4 | P6.3 — cold start end to end | **DONE / VERIFIED (2026-08-16)** — 0002+0003 applied; harness A–F 49/49 PASS; cold-start E2E PASS; idempotent; auth login/logout regression PASS; cross-tenant isolation (HTTP/JWT/RLS) PASS; zero residue; typecheck/lint/build green |
 | S3.4 Roster | P5.1–P5.2 | P6.4 — create + search; person/club data correct | READY |
 | S3.5 Account ↔ person linking | P5.3 | P6.4 — link is 0:1, optional | READY |
 | S3.6 Player profile shell | P5.4 | P6.4 — tabs resolve; no fabricated data | READY |
 | S3.7 Header player switcher | P5.5 | P6.4 — switcher drives context | READY |
-| S3.8 Isolation verification | P6.5 | **BLOCKED — method is DM-020** | BLOCKED (closure) |
+| S3.8 Isolation verification | P6.5 | **36/36 PASS — data-layer, rollback-clean (2026-08-12)** | **DONE / PASS** |
 
 ---
 
 ## Summary of the current picture
 
 - **Every startup structure and roster story is `READY`** — all information for the schema and the build exists.
-- **The S3.0 *start* gate is GREEN — all five criteria met on 2026-08-05.** F2 approved, G1 resolved (ADR-0003), DBDS Part II+IV C3-scoped-approved, C4 legacy reconciled (archived to `supabase/legacy/`), C5 bootstrap specified. Migration 0001 (S3.1) may begin; it has not been started. This is inherited, not a matrix decision.
-- **The *closure* gate is DM-020**, for S3.2/S3.8 only.
+- **The S3.0 *start* gate is GREEN — all five criteria met on 2026-08-05.** F2 approved, G1 resolved (ADR-0003), DBDS Part II+IV C3-scoped-approved, C4 legacy reconciled (archived to `supabase/legacy/`), C5 bootstrap specified. Migration 0001 (S3.1) has since been applied and verified (2026-08-12). This is inherited, not a matrix decision.
+- **DM-020 is resolved** (verifiability standard set, 2026-08-12); **S3.8 was executed (36/36 PASS, data-layer, rollback-clean) and S3.2 is CLOSED/DONE on isolation (2026-08-12).**
 - **No contradiction forces rework of Migration 0001**; every startup structure traces cleanly from the Intelligence Core (Matrix F).
 
 ---

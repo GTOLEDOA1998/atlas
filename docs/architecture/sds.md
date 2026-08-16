@@ -543,22 +543,23 @@ The four invariants of `product-architecture.md` §10.1 are not aspirations. Eac
 
 The completion criterion S3 inherits is *"ownership boundaries enforced at the data layer, not the UI."* **That is a claim that must be demonstrable, not assertable.** Verifying tenant isolation by clicking is how leaks are born.
 
-## 9.4 Blocked
+## 9.4 Completion criterion — DM-020 resolved
 
-**DM-020** — the level of verifiability Atlas requires before work counts as implemented — is open, and §9 has no completion criterion without it. `development-rules.md` §7 currently defines done as *"builds and runs"*, with no verification requirement at all.
+**DM-020 is resolved** (Product Owner, 2026-08-12). The verifiability standard §9 was owed is now fixed: **an enforcement-boundary claim counts as *implemented* only when it is demonstrated mechanically at the layer where the boundary is enforced — never by documentary inspection and never through the UI.** The demonstration is a **reproducible** check that exercises legitimate operations (which must succeed) and unauthorised ones (which must fail), yields **explicit PASS/FAIL** results with **auditable evidence** (the observed outcomes, the applied schema/migration version, and when it ran), and leaves **no persistent test data** wherever it can run transactionally. This augments the `development-rules.md` §7 Definition of Done for enforcement-boundary work; the **harness and tooling are a consequence of the standard, not part of it** — no language, framework or suite is mandated.
+
+The **first concrete application** is Sprint 3 tenant isolation: §5's policies (S3.2, authored) and the **S3.8** isolation demonstration. This criterion **unblocks** §9; it does not by itself execute S3.8 or close S3.2.
 
 ---
 
 # §10 · Open decisions
 
-Five open, none resolved here. The register is [`open-decisions.md`](../work/open-decisions.md). *(DM-013, DM-014, DM-015 were resolved 2026-08-05 by the Product Owner — recorded in `data-model.md`; their SDS references are updated in §2, §3, §4, §5.)*
+Four open. The register is [`open-decisions.md`](../work/open-decisions.md). **DM-020 is resolved (2026-08-12) — recorded in §9.4 above.** *(DM-013, DM-014, DM-015 were resolved 2026-08-05 by the Product Owner — recorded in `data-model.md`; their SDS references are updated in §2, §3, §4, §5.)*
 
 | # | Lands in |
 |---|---|
 | DM-016 · `Plan` : `Objective` cardinality | §2, §4 |
 | DM-017A · whether an `Assignment` also targets a group or session | §2, §4, §5 |
 | DM-019 · trigger and visibility of mass re-derivation | §6 |
-| DM-020 · required level of verifiability | §9 |
 | **DM-022** · **granularity of derivation tracking** | **§3, §4** |
 
 **Resolved and recorded here:** **DM-021** — the SDS describes the complete product. Sprints consume it; it is not written per sprint. Recorded in the Amendment line of this document.

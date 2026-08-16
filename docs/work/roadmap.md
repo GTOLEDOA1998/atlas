@@ -21,13 +21,13 @@
 | **S2** | Application Shell | ✅ **Complete** |
 | **D1** | Documentation foundation and governance | ✅ **Complete** — ADR-0002 |
 | **F2** | Data Model | ✅ **Approved** — 2026-08-05, by explicit Product Owner decision on the F2 Final Audit; prerequisites (G1, DM-013/14/15) met; DM-016/017A/019/022 deliberately deferred |
-| **DM** | Open architectural decisions | 🟡 **Five open** — DM-016 · DM-017A · DM-019 · DM-020 · DM-022 *(DM-013/14/15 resolved 2026-08-05)* |
+| **DM** | Open architectural decisions | 🟡 **Four open** — DM-016 · DM-017A · DM-019 · DM-022 *(DM-013/14/15 resolved 2026-08-05; DM-020 resolved 2026-08-12)* |
 | **G1** | Memory governance | ✅ **Resolved** — [`memory-governance.md`](../constitution/memory-governance.md) accepted as Tier 1 policy by [`ADR-0003`](../decisions/ADR-0003-memory-governance.md) (2026-08-05); `memory-model.md` Open Question 1 closed |
 | **F3** | Software Design Specification · Database Design Specification | 🚧 **In progress** — [`sds.md`](../architecture/sds.md) written, **not approved**; [`dbds.md`](../architecture/dbds.md) written, **Part II + Part IV C3-scoped-approved (2026-08-05)**, full DBDS closure still pending (Part VIII decisions) |
-| **S3** | Players | 🟢 **Gate green, not started** — the five S3.0 start criteria (§7) are all met (2026-08-05); planned in [`sprints/sprint-03-players.md`](sprints/sprint-03-players.md) with an execution [`runbook`](sprints/sprint-03-execution-runbook.md). Migration 0001 (S3.1) has not begun |
+| **S3** | Players | 🟢 **In progress** — S3.0 gate met (2026-08-05); **S3.1 Migration 0001 applied + verified; S3.2 access policies CLOSED/DONE; S3.3 tenancy bootstrap DONE/VERIFIED (2026-08-16); S3.8 isolation demonstrated (36/36 PASS, data-layer, 2026-08-12)**. Roster/profile stories (S3.4–S3.7) not yet started. Planned in [`sprints/sprint-03-players.md`](sprints/sprint-03-players.md) + [`runbook`](sprints/sprint-03-execution-runbook.md) |
 | **S4+** | Media · Perception · Analysis · Objectives · Training · Library · Assistant | ⬜ Sequenced below |
 
-**The S3.0 entry gate is now GREEN (5/5, 2026-08-05): F2 approved, G1 resolved, DBDS Part II+IV C3-approved, legacy migration reconciled (archived), bootstrap specified.** Migration 0001 (S3.1) has not begun. The remaining downstream items are a migration-application path (CLI/link or dashboard, credentials) for when S3.1 runs, and the five open decisions where they bite in later sprints. *(DM-013/14/15 were resolved 2026-08-05.)*
+**The S3.0 entry gate is now GREEN (5/5, 2026-08-05): F2 approved, G1 resolved, DBDS Part II+IV C3-approved, legacy migration reconciled (archived), bootstrap specified.** **Migration 0001 (S3.1) is applied and verified; S3.2 access policies are CLOSED/DONE with isolation demonstrated (S3.8, 36/36 PASS at the data layer, 2026-08-12).** The remaining downstream items are the roster/profile stories (S3.4–S3.7) and the four open decisions where they bite in later sprints. *(DM-013/14/15 resolved 2026-08-05; DM-020 resolved 2026-08-12.)*
 
 ---
 
@@ -186,11 +186,11 @@ S4 Media ──▶ S5 Perception ──▶ S6 Analysis
 
 ---
 
-## DM · Open architectural decisions — 🟡 Five open
+## DM · Open architectural decisions — 🟡 Four open
 
 **Register.** [`open-decisions.md`](open-decisions.md).
 
-**State.** DM-001 … DM-012 approved, plus **DM-021** (the SDS covers the whole product), **DM-023** (`Profile` withdrawn), **DM-018** (the athlete is `Player` the person plus `RosterMembership` the club relationship; the former DM-017B is absorbed), **DM-025** (the `RecordingAssertion` structure), and — on **2026-08-05** — the three Part VII decisions **DM-013** (`Training : TrainingSession` = 1:1), **DM-014** (minimal authority model persisted on `Declaration`), and **DM-015** (`LibraryConcept`/`Exercise` a curated family outside the four classes). Each is recorded in the document it changed (`data-model.md`, reflected in `dbds.md`/`sds.md`). **DM-016, DM-017A, DM-019, DM-020 and DM-022 remain open.** DM-016 moves a boundary in the Aggregate Map; DM-020 gates SDS §9. The former DM-026 and DM-027 were withdrawn as non-architectural — the provisioning mechanism is now specified in `sds.md` §5.6 and the display-name source a Sprint 3 implementation note.
+**State.** DM-001 … DM-012 approved, plus **DM-021** (the SDS covers the whole product), **DM-023** (`Profile` withdrawn), **DM-018** (the athlete is `Player` the person plus `RosterMembership` the club relationship; the former DM-017B is absorbed), **DM-025** (the `RecordingAssertion` structure), and — on **2026-08-05** — the three Part VII decisions **DM-013** (`Training : TrainingSession` = 1:1), **DM-014** (minimal authority model persisted on `Declaration`), and **DM-015** (`LibraryConcept`/`Exercise` a curated family outside the four classes). Each is recorded in the document it changed (`data-model.md`, reflected in `dbds.md`/`sds.md`). **DM-016, DM-017A, DM-019 and DM-022 remain open** (DM-020 resolved 2026-08-12 — the verifiability standard for enforcement boundaries, recorded in `sds.md` §9.4). DM-016 moves a boundary in the Aggregate Map. The former DM-026 and DM-027 were withdrawn as non-architectural — the provisioning mechanism is now specified in `sds.md` §5.6 and the display-name source a Sprint 3 implementation note.
 
 **Dependencies.** None. Each is a decision, not work.
 
@@ -251,7 +251,7 @@ Not a phase. Three artifacts written to carry the implementation, recorded here 
 
 **Prepared by S2.** Navigation entry flips from `planned` to `live`; page primitives exist; the service-boundary pattern is established; the header context region is waiting.
 
-**Gate green, not started.** Two work documents exist and this roadmap does not restate them: [`sprints/sprint-03-players.md`](sprints/sprint-03-players.md) holds the stories, their order and their acceptance criteria, and fixes in §7 the five criteria that must hold before Migration 0001 may begin; [`sprints/sprint-03-execution-runbook.md`](sprints/sprint-03-execution-runbook.md) sequences the execution in six phases. **All five S3.0 criteria are met (2026-08-05):** F2 approved, G1 resolved, DBDS Part II+IV C3-approved, legacy migration reconciled (archived to `supabase/legacy/`), bootstrap specified. Migration 0001 (S3.1) has not begun.
+**Gate green; S3.1–S3.3 done, roster stories pending.** Two work documents exist and this roadmap does not restate them: [`sprints/sprint-03-players.md`](sprints/sprint-03-players.md) holds the stories, their order and their acceptance criteria, and fixes in §7 the five criteria that must hold before Migration 0001 may begin; [`sprints/sprint-03-execution-runbook.md`](sprints/sprint-03-execution-runbook.md) sequences the execution in six phases. **All five S3.0 criteria are met (2026-08-05):** F2 approved, G1 resolved, DBDS Part II+IV C3-approved, legacy migration reconciled (archived to `supabase/legacy/`), bootstrap specified. **Migration 0001 (S3.1) is applied and verified; S3.2 access policies are CLOSED/DONE (isolation demonstrated via S3.8, 36/36 PASS at the data layer, 2026-08-12); S3.3 tenancy bootstrap is DONE/VERIFIED (Migration 0002 + corrective 0003 applied; harness A–F 49/49 PASS; cold-start E2E PASS; 2026-08-16); roster/profile stories S3.4–S3.7 remain to be built.**
 
 ---
 

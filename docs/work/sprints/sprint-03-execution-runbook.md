@@ -204,7 +204,7 @@ P1 Environment ─▶ P2 Legacy 0001 (verify only) ─▶ P3 Migration 0001 ─�
 - **Entradas:** `dbds.md` Part IV (regimes table) · `sds.md` §5.2–§5.3.
 - **Salidas:** tenant-scoped policies via `User → Membership → Club`; the subject-scoped rule for `Player` (a club reaches a person through a `RosterMembership` it owns); membership grants visibility, assignment grants authority.
 - **Criterio de finalización:** every startup structure has an explicit policy; the two questions (visibility vs authority) are not conflated.
-- **Riesgos:** **the bootstrap chicken-and-egg** — a just-registered coach has *no* membership yet, so the chain denies everything, including creating their own club. The policy set must permit a session with no membership to create exactly its **own** club-of-one and nothing else. This constraint is realized here and consumed by P4; it is not a new decision — it realizes the cold start (`sds.md` §5.6, `data-model.md` §1.3). **The *method of proving* isolation is `DM-020`, open — it gates S3.2 *closure*, not authoring (`sprint-03-players.md` S3.2 DoD).**
+- **Riesgos:** **the bootstrap chicken-and-egg** — a just-registered coach has *no* membership yet, so the chain denies everything, including creating their own club. The policy set must permit a session with no membership to create exactly its **own** club-of-one and nothing else. This constraint is realized here and consumed by P4; it is not a new decision — it realizes the cold start (`sds.md` §5.6, `data-model.md` §1.3). **The *method of proving* isolation is `DM-020`, resolved (2026-08-12) — it set the S3.2 *closure* standard, not authoring (`sprint-03-players.md` S3.2 DoD).**
 - **Dependencias:** 3.8.
 
 ### Step 3.10 — Integrity and empty-DB verification
@@ -379,7 +379,7 @@ P1 Environment ─▶ P2 Legacy 0001 (verify only) ─▶ P3 Migration 0001 ─�
 - **Objetivo:** demonstrate — not assert — that a coach in one club cannot reach another club's players, memberships or assignments.
 - **Entradas:** `sds.md` §9.3 · `dbds.md` Part IV · `sprint-03-players.md` S3.8.
 - **Salidas:** a demonstration, exercised at the **data layer** (not the UI), that cross-club access is denied for two clubs / two coaches.
-- **Criterio de finalización:** cross-club read and write are both denied at the data layer. **⚠️ The required *standard of proof* is `DM-020`, which is open.** The team can *build and demonstrate* isolation now, but the sprint **cannot formally close on isolation** until DM-020 sets the verification standard (`sprint-03-players.md` S3.8 DoD). This is the one residual gate; it is a process decision, not a domain or architecture question, and it is **not** decided in this runbook.
+- **Criterio de finalización:** cross-club read and write are both denied at the data layer. **✅ The required *standard of proof* is `DM-020`, resolved (2026-08-12).** Isolation was executed and demonstrated at the data layer (36/36 PASS), so S3.2 **is formally closed on isolation** to the DM-020 standard (`sprint-03-players.md` S3.8 DoD). This was the one residual gate; it is a process decision, not a domain or architecture question, and it was **not** decided in this runbook.
 - **Riesgos:** verifying isolation by clicking through the UI — "how leaks are born" (`sds.md` §9.3).
 - **Dependencias:** Phases 3–5.
 
